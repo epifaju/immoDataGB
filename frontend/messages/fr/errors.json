@@ -1,0 +1,4 @@
+{
+  "HEALTH_DATABASE_UNAVAILABLE": "La base PostGIS est inaccessible.",
+  "INTERNAL_ERROR": "Une erreur interne s'est produite."
+}

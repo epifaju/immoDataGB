@@ -1,0 +1,13 @@
+{
+  "appName": "Données immobilières de Guinée-Bissau",
+  "loading": "Chargement…",
+  "error": "Impossible de joindre l'API.",
+  "health": {
+    "title": "État de la plateforme",
+    "api": "API",
+    "database": "Base de données",
+    "postgis": "PostGIS",
+    "up": "opérationnelle",
+    "down": "indisponible"
+  }
+}

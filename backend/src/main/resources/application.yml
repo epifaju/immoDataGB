@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: immodata-gb
+  profiles:
+    default: dev
+  jackson:
+    default-property-inclusion: always

@@ -1,9 +1,10 @@
-# Mêmes valeurs que la racine .env. Réservé à la machine de développement.
+# Profil local uniquement. Valeurs par défaut = .env.example (jetables).
+# Surcharge possible via SPRING_DATASOURCE_* / variables d'environnement.
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5435/immodata
-    username: immodata
-    password: immodata
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5435/immodata}
+    username: ${SPRING_DATASOURCE_USERNAME:immodata}
+    password: ${SPRING_DATASOURCE_PASSWORD:immodata}
     hikari:
       connection-timeout: 3000
   flyway:
@@ -11,4 +12,4 @@ spring:
 
 app:
   cors:
-    allowed-origins: http://localhost:3000
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000}

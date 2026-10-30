@@ -16,6 +16,17 @@ Spring Boot 3.3.13 et Next.js 14.2.35 ne sont plus couverts par le support open 
 
 Le profil Spring `dev` est le profil local par défaut. Il ne sert qu'au poste de développement et doit disparaître avant un déploiement.
 
+## Secrets et dépôt Git
+
+| Fichier | Suivi Git ? | Contenu |
+|---|---|---|
+| `.env`, `frontend/.env.local` | Non (`.gitignore`) | Copie locale depuis les `.example` |
+| `.env.example`, `frontend/.env.example` | Oui | Placeholders locaux uniquement |
+| `application-dev.yml` | Oui | Défauts locaux surchargeables via `SPRING_DATASOURCE_*` |
+| `docker/martin.yaml` | Oui | `${POSTGRES_*}` injectés par Compose |
+
+Identifiants `immodata` / `minioadmin` : **uniquement pour localhost**, ports liés à `127.0.0.1`. Ne pas les réutiliser en staging/prod. Pas de JWT, PEM ni clé cloud dans ce dépôt. Avant un push : vérifier `git status` (aucun `.env`) et `git check-ignore -v .env`.
+
 ## Extensions PostgreSQL
 
 `CREATE EXTENSION` fonctionne ici parce que l'utilisateur `immodata` est superuser de l'image PostGIS.

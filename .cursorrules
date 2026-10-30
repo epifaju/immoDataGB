@@ -1,0 +1,77 @@
+# Projet : Plateforme de Données Immobilières et Foncières — Guinée-Bissau
+
+# Stack : Java 21 + Spring Boot 3.3 + PostgreSQL 16/PostGIS 3.4 + Next.js 14 + TypeScript + Tailwind CSS
+
+Référence produit : `prd-immo-guinee-bissau-optimise.md`. Zone pilote : Bissau. Langue produit par défaut : portugais.
+
+## Architecture
+
+- Monorepo : `backend/` et `frontend/`
+- Backend : `backend/src/main/java/com/immodata/gb/` avec packages `domain`, `application`, `infrastructure`, `api`
+- Un package métier par module, sans mélanger les blocs du PRD
+- Frontend : Next.js 14 App Router sous `frontend/app/[locale]/`
+- Données métier tenant-scopées : colonne `organisation_id`
+- Géométries dans une table dédiée, SRID 4326 (point, polygone ou approximatif). Jamais de lat/lng seuls quand un polygone existe
+
+## Conventions backend
+
+- Entités JPA : héritage de `BaseEntity` (`id` UUID `gen_random_uuid`, `createdAt`, `updatedAt`, `createdBy`, `updatedBy`)
+- Soft delete : `deletedAt` TIMESTAMPTZ NULL. Pas de suppression physique des biens, sources, documents ou audits
+- Réponses : `ApiResponse<T>`. Listes : `PageResponse<T>` (`page=0`, `size=20`, max `100`)
+- DTO de requête : Bean Validation. Mapping Entity ↔ DTO : MapStruct
+- Erreurs métier : code string stable, traduit côté frontend (`messages/*/errors.json`)
+- Flyway : `V{n}__{snake_case}.sql`. Ne jamais modifier une migration déjà appliquée
+- Mots de passe : BCrypt, facteur minimum 12. Jamais de mot de passe ni de hash dans un DTO
+- JWT RS256 : access token 15 min, header `Authorization: Bearer`. Refresh token 7 jours, cookie HttpOnly `SameSite=Strict`, rotation à chaque usage, révocation dans `revoked_tokens`
+- Clés JWT et secrets : variables d'environnement ou fichiers montés. Jamais de PEM, mot de passe ou clé dans le dépôt
+- `@PreAuthorize` sur chaque endpoint. Rôles : `ADMIN`, `ANALYSTE`, `AGENT_TERRAIN`, `PARTENAIRE`, `LECTEUR_PRO`, `LECTEUR_PUBLIC`. Un partenaire n'agit que sur ses biens
+- PostGIS pour tout filtre spatial (`ST_Within`, index GIST). Recherche texte : PostgreSQL FTS + `pg_trgm`
+- Score de confiance : entier 0–100, niveau `low` | `medium` | `high`, et `confidence_summary` obligatoire
+- Estimation : médiane + IQR, fourchette basse/haute obligatoire, avertissement si moins de 5 comparables. Pas de valeur ponctuelle
+- Documents : whitelist `pdf, jpg, jpeg, png, webp, heic, docx, xlsx`, 50 Mo, contrôle MIME (Apache Tika), URL signée 15 min, audit de chaque upload, lecture et suppression logique
+- Observation terrain : statut initial `pending_validation`, publiée seulement après validation analyste ou admin
+- OpenAPI via SpringDoc sur `/api/v1`
+
+## Conventions frontend
+
+- TypeScript strict, aucun `any`
+- UI : Tailwind CSS + shadcn/ui. Formulaires : React Hook Form + Zod
+- Données serveur : TanStack Query v5. État UI (auth, sidebar, locale) : Zustand
+- Access token en mémoire uniquement. Jamais de JWT dans `localStorage` ou `sessionStorage`
+- i18n : `next-intl`, locales `pt` (défaut), `fr`, `en`. Fichiers `frontend/messages/{pt,fr,en}/`
+- Clés rédigées d'abord en portugais. Résolution : profil utilisateur, cookie `NEXT_LOCALE`, `Accept-Language`, puis `pt`
+- Carte : MapLibre GL JS + react-map-gl. Filtres et emprise reflétés dans l'URL (`/map?bbox=&type=&confidence=`)
+- Badge de confiance : rouge 0–33, orange 34–66, vert 67–100, avec la justification textuelle
+- Distinguer visuellement donnée déclarée, partielle, vérifiée et litigieuse
+
+## Tests
+
+- Services : JUnit 5 + Mockito
+- Controllers et SQL spatial : `@SpringBootTest` + Testcontainers PostgreSQL/PostGIS
+- Composants critiques : Vitest + Testing Library
+- Parcours carte, fiche, upload et validation : Playwright
+
+## Ordre de développement
+
+Un seul bloc du PRD par demande. Les phases 2 à 4 (hors ligne, OCR, API partenaires) restent hors scope tant qu'elles ne sont pas demandées.
+
+1. Bloc 0 — Fondations : Next.js, Spring Boot, Docker Compose (PostGIS, Redis, MinIO, Martin), i18n, Flyway V1–V2
+2. Bloc 1 — Carte MapLibre et recherche spatiale Bissau
+3. Bloc 2 — Fiches bien / parcelle / dossier et workflow de validation
+4. Bloc 3 — Moteur de confiance configurable
+5. Bloc 4 — Documents MinIO et URLs signées
+6. Bloc 5 — Estimation par comparables
+7. Bloc 6 — Import CSV/Excel (Spring Batch) et saisie terrain
+8. Bloc 7 — Back-office, file de validation, journal d'audit
+9. Bloc 8 — Profil et locale persistée
+
+## Ne jamais faire
+
+- Modifier une migration Flyway déjà appliquée
+- Stocker un refresh token dans `localStorage` ou `sessionStorage`
+- Retourner un mot de passe, un hash, ou une URL de document permanente
+- Désactiver la validation backend
+- Afficher une estimation sans fourchette, ou sans avertissement si l'échantillon a moins de 5 comparables
+- Publier une observation terrain sans passage par `pending_validation`
+- Présenter une donnée comme vérifiée sans statut de preuve explicite
+- Coder plusieurs blocs du PRD dans la même demande

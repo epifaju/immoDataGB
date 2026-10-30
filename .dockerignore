@@ -1,6 +1,12 @@
 .env
+.env.*
 frontend/.env.local
+frontend/.env.*.local
 backend/target/
 frontend/node_modules/
 frontend/.next/
+.superpowers/
+.cursor/
 .git
+*.pem
+*.key

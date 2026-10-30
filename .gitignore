@@ -1,5 +1,41 @@
+# Local secrets (never commit)
 .env
+.env.*
+!.env.example
 frontend/.env.local
+frontend/.env.*.local
+
+# Build / deps
 backend/target/
 frontend/node_modules/
 frontend/.next/
+frontend/out/
+*.class
+*.jar
+*.war
+!backend/mvnw
+!backend/mvnw.cmd
+
+# Keys & certs
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+id_rsa*
+*.crt
+
+# IDE / OS / agent scratch
+.idea/
+*.iml
+.vscode/
+.cursor/
+.superpowers/
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*~
+
+# Obsolete design drafts (keep only current specs under docs/superpowers/specs/)
+docs/superpowers/specs/spec-old/

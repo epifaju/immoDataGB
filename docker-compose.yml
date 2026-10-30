@@ -65,6 +65,10 @@ services:
   martin:
     image: ghcr.io/maplibre/martin:1.16.1
     command: ["--config", "/config/martin.yaml"]
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "127.0.0.1:3001:3000"
     volumes:

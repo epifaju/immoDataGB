@@ -104,4 +104,15 @@ Attendu : `totalElements` 24, `totalPages` 2, 20 items (`BIS-024` … `BIS-005`)
 
 Si les ports 3000 / 8080 sont pris, utiliser 3010 / 8081 et ajuster `NEXT_PUBLIC_API_URL` / CORS comme au cycle 0.
 
-Le seed (`db/seed`) ne s’applique qu’en profil `dev`. Pour recharger un seed modifié : `docker compose down -v` puis redémarrer.
+Le seed (`db/seed`) ne s’applique qu’en profil `dev`. Il est idempotent (biens mis à jour, sources de la plage UUID recréées) : un redémarrage du backend suffit en général, sans `docker compose down -v`.
+
+## Bloc 2 — Fiche bien
+
+- Depuis la carte : popup → « Ver ficha » / « Voir la fiche » → `/pt/properties/{id}` (conserve bbox/filtres/page).
+- « Voltar ao mapa » restaure la vue ; fiche ouverte sans query → retour `/map`.
+- Badges confiance + documentation, adresse si présente, liste des sources.
+
+```text
+curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000001"
+curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000005/sources"
+```

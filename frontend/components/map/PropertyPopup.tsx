@@ -1,18 +1,27 @@
 'use client';
 
-import {useTranslations} from 'next-intl';
+import {Popup} from 'react-map-gl/maplibre';
 import type {PropertyMapItem} from '@/lib/api/types';
-import {ConfidenceBadge} from './ConfidenceBadge';
+import {PropertyPopupContent} from './PropertyPopupContent';
 
-export function PropertyPopup({item}: {item: PropertyMapItem}) {
-  const t = useTranslations('map');
+export function PropertyPopup({
+  item,
+  mapQuery,
+  onClose,
+}: {
+  item: PropertyMapItem;
+  mapQuery: string;
+  onClose: () => void;
+}) {
   return (
-    <div className="max-w-xs space-y-1 p-1">
-      <div className="font-medium">{item.title}</div>
-      <div className="text-sm text-slate-600">{item.reference}</div>
-      <div className="text-sm">{t(`type.${item.propertyType}`)}</div>
-      <ConfidenceBadge level={item.confidenceLevel} score={item.confidenceScore} />
-      <p className="text-sm text-slate-700">{item.confidenceSummary}</p>
-    </div>
+    <Popup
+      longitude={item.longitude}
+      latitude={item.latitude}
+      anchor="bottom"
+      onClose={onClose}
+      closeOnClick={false}
+    >
+      <PropertyPopupContent item={item} mapQuery={mapQuery} />
+    </Popup>
   );
 }

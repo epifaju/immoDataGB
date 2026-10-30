@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useRef} from 'react';
-import Map, {Marker, Popup, type MapRef} from 'react-map-gl/maplibre';
+import Map, {Marker, type MapRef} from 'react-map-gl/maplibre';
 import type {PropertyMapItem} from '@/lib/api/types';
 import {OSM_RASTER_STYLE} from '@/lib/map/constants';
 import {PropertyPopup} from './PropertyPopup';
@@ -25,6 +25,7 @@ export function PropertyMap({
   bbox,
   items,
   selected,
+  mapQuery,
   onSelect,
   onClearSelection,
   onBboxChange,
@@ -32,6 +33,7 @@ export function PropertyMap({
   bbox: string;
   items: PropertyMapItem[];
   selected: PropertyMapItem | null;
+  mapQuery: string;
   onSelect: (item: PropertyMapItem) => void;
   onClearSelection: () => void;
   onBboxChange: (bbox: string) => void;
@@ -113,15 +115,7 @@ export function PropertyMap({
         />
       ))}
       {selected ? (
-        <Popup
-          longitude={selected.longitude}
-          latitude={selected.latitude}
-          anchor="bottom"
-          onClose={onClearSelection}
-          closeOnClick={false}
-        >
-          <PropertyPopup item={selected} />
-        </Popup>
+        <PropertyPopup item={selected} mapQuery={mapQuery} onClose={onClearSelection} />
       ) : null}
     </Map>
   );

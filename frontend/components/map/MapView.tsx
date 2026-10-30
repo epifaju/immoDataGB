@@ -95,6 +95,7 @@ export function MapView() {
   }
 
   const showSkeleton = query.isLoading && !query.data;
+  const mapQuery = serializeMapSearchParams(state);
 
   return (
     <div className="space-y-4 p-4">
@@ -120,6 +121,7 @@ export function MapView() {
             bbox={state.bbox}
             items={page?.items ?? []}
             selected={selected}
+            mapQuery={mapQuery}
             onSelect={setSelected}
             onClearSelection={() => setSelected(null)}
             onBboxChange={(bbox) => replaceState(withFiltersReset(state, {bbox}))}

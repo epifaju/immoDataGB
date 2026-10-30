@@ -1,0 +1,5 @@
+postgres:
+  connection_string: postgres://immodata:immodata@postgis:5432/immodata
+  auto_publish:
+    from_schemas:
+      - public

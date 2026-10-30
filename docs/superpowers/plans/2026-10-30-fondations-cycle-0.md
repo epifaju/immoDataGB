@@ -37,6 +37,7 @@ Les commandes partent de la racine du dépôt. Le shell est PowerShell. Les test
 - `docker-compose.yml` — PostGIS, Redis, MinIO, init du bucket, Martin.
 - `.env.example` — variables Compose versionnées.
 - `docker/minio-init.sh` — enchaîne les trois commandes `mc`.
+- `docker/martin.yaml` — limite Martin au schéma `public`.
 - `backend/` — API de santé, Flyway, tests.
 - `frontend/` — page localisée qui affiche cette API.
 - `.gitignore`, `.dockerignore` — secrets et artefacts.
@@ -198,9 +199,11 @@ services:
 
   martin:
     image: ghcr.io/maplibre/martin:1.16.1
-    command: ["postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgis:5432/${POSTGRES_DB}"]
+    command: ["--config", "/config/martin.yaml"]
     ports:
       - "127.0.0.1:3001:3000"
+    volumes:
+      - ./docker/martin.yaml:/config/martin.yaml:ro
     depends_on:
       postgis:
         condition: service_healthy
@@ -271,7 +274,7 @@ Expected: les journaux contiennent `documents`. `/health` renvoie `OK`. `/catalo
 Ne pas ajouter `.env`.
 
 ```powershell
-git add .env.example docker-compose.yml docker/minio-init.sh docker/wait-result.txt
+git add .env.example docker-compose.yml docker/minio-init.sh docker/martin.yaml docker/wait-result.txt
 git commit -m "build: run PostGIS, Redis, MinIO and Martin locally"
 ```
 

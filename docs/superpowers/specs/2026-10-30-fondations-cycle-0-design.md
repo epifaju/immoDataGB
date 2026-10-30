@@ -105,9 +105,9 @@ Healthchecks :
 - Martin : `GET /health` sur le port interne 3000. L'image `1.16.1` contient `wget` et pas `curl`, donc le healthcheck Compose utilise `wget`. Martin ne publie que le schéma `public`, pour laisser hors du catalogue les tables Tiger créées par l'image PostGIS.
 - `minio-init` attend MinIO sain, puis se termine avec succès
 
-Martin attend PostGIS sain. Sa commande reçoit l'URL Postgres. Sans table géométrique, `GET http://localhost:3001/catalog` répond 200 et une liste de sources vide. `GET http://localhost:3001/health` répond 200 et le corps `OK`.
+Martin attend PostGIS sain. Il démarre avec `--config /config/martin.yaml`, qui ne publie que le schéma public. Sans table géométrique, `GET http://localhost:3001/catalog` répond 200 et une liste de sources vide. `GET http://localhost:3001/health` répond 200 et le corps `OK`.
 
-`minio-init` utilise la même image. Son entrypoint est `mc`, avec `MC_CONFIG_DIR=/tmp/mc`. Il exécute :
+`minio-init` utilise la même image. Son entrypoint est `/bin/sh /minio-init.sh`, avec `MC_CONFIG_DIR=/tmp/mc`. Le script n'appelle que `mc`. Il exécute :
 
 ```text
 mc alias set local http://minio:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD

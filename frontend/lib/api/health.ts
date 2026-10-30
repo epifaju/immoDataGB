@@ -1,3 +1,4 @@
+import {fetchJson} from './http';
 import type {ApiResponse, HealthResult, HealthView} from './types';
 
 function isHealthBody(value: unknown): value is ApiResponse<HealthView | null> {
@@ -11,25 +12,12 @@ function isHealthBody(value: unknown): value is ApiResponse<HealthView | null> {
 }
 
 export async function fetchHealth(apiUrl: string): Promise<HealthResult> {
-  let response: Response;
-  try {
-    response = await fetch(`${apiUrl}/api/v1/health`, {
-      headers: {Accept: 'application/json'},
-      cache: 'no-store',
-    });
-  } catch {
-    throw new Error('NETWORK');
-  }
-  try {
-    const body: unknown = await response.json();
-    if (!isHealthBody(body)) {
-      throw new Error('NOT_JSON');
-    }
-    return {status: response.status, body};
-  } catch (error) {
-    if (error instanceof Error && error.message === 'NOT_JSON') {
-      throw error;
-    }
+  const {status, body} = await fetchJson<unknown>(`${apiUrl}/api/v1/health`, {
+    headers: {Accept: 'application/json'},
+    cache: 'no-store',
+  });
+  if (!isHealthBody(body)) {
     throw new Error('NOT_JSON');
   }
+  return {status, body};
 }

@@ -1,4 +1,7 @@
 {
   "HEALTH_DATABASE_UNAVAILABLE": "The PostGIS database is unreachable.",
-  "INTERNAL_ERROR": "An internal error occurred."
+  "INTERNAL_ERROR": "An internal error occurred.",
+  "PROPERTY_BBOX_INVALID": "The map area is invalid.",
+  "PROPERTY_FILTER_INVALID": "Invalid filter.",
+  "PROPERTY_PAGE_INVALID": "Invalid page."
 }

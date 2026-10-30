@@ -1,9 +1,11 @@
 import type {ReactNode} from 'react';
+import {Suspense} from 'react';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations, setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {QueryProvider} from '@/components/providers/QueryProvider';
 import {LocaleSwitcher} from '@/components/locale/LocaleSwitcher';
+import {Link} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
 import '../globals.css';
 
@@ -30,9 +32,12 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <header>
+            <header className="flex items-center gap-4 p-4">
               <p>{t('appName')}</p>
-              <LocaleSwitcher />
+              <Link href="/map">{t('nav.map')}</Link>
+              <Suspense fallback={null}>
+                <LocaleSwitcher />
+              </Suspense>
             </header>
             {children}
           </QueryProvider>

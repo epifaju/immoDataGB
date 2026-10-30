@@ -1,0 +1,26 @@
+{
+  "title": "Mapa de imóveis",
+  "filters": {
+    "type": "Tipo",
+    "confidence": "Confiança",
+    "all": "Todos"
+  },
+  "type": {
+    "house": "Moradia",
+    "apartment": "Apartamento",
+    "land": "Terreno",
+    "commercial": "Comercial"
+  },
+  "confidence": {
+    "low": "Baixa",
+    "medium": "Média",
+    "high": "Alta"
+  },
+  "list": {
+    "title": "Imóveis",
+    "empty": "Nenhum imóvel nesta área.",
+    "range": "{from}–{to} de {total}",
+    "previous": "Anterior",
+    "next": "Seguinte"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Property map",
+  "filters": {
+    "type": "Type",
+    "confidence": "Confidence",
+    "all": "All"
+  },
+  "type": {
+    "house": "House",
+    "apartment": "Apartment",
+    "land": "Land",
+    "commercial": "Commercial"
+  },
+  "confidence": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "list": {
+    "title": "Properties",
+    "empty": "No properties in this area.",
+    "range": "{from}–{to} of {total}",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

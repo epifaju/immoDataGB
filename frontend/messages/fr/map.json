@@ -1,0 +1,26 @@
+{
+  "title": "Carte des biens",
+  "filters": {
+    "type": "Type",
+    "confidence": "Confiance",
+    "all": "Tous"
+  },
+  "type": {
+    "house": "Maison",
+    "apartment": "Appartement",
+    "land": "Terrain",
+    "commercial": "Local commercial"
+  },
+  "confidence": {
+    "low": "Faible",
+    "medium": "Moyenne",
+    "high": "Élevée"
+  },
+  "list": {
+    "title": "Biens",
+    "empty": "Aucun bien dans l'emprise.",
+    "range": "{from}–{to} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant"
+  }
+}

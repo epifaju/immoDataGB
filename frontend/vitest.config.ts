@@ -16,6 +16,7 @@ const nextNavigationExports = [
   'useParams',
   'usePathname',
   'useRouter',
+  'useSearchParams',
 ];
 
 const nextIntlNavigationId = '\0next-intl-next-navigation';

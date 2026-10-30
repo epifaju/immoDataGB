@@ -1,4 +1,7 @@
 {
   "HEALTH_DATABASE_UNAVAILABLE": "La base PostGIS est inaccessible.",
-  "INTERNAL_ERROR": "Une erreur interne s'est produite."
+  "INTERNAL_ERROR": "Une erreur interne s'est produite.",
+  "PROPERTY_BBOX_INVALID": "La zone de la carte est invalide.",
+  "PROPERTY_FILTER_INVALID": "Filtre invalide.",
+  "PROPERTY_PAGE_INVALID": "Page invalide."
 }

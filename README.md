@@ -1,6 +1,7 @@
 # Données immobilières et foncières — Guinée-Bissau
 
-Cycle 0 : fondations locales (Next.js, Spring Boot, Docker Compose). Zone pilote : Bissau. Langue produit par défaut : portugais.
+Cycle 0 : fondations locales (Next.js, Spring Boot, Docker Compose).  
+Bloc 1 : carte MapLibre + liste synchronisée + API spatiale PostGIS (seed Bissau). Zone pilote : Bissau. Langue produit par défaut : portugais.
 
 ## Versions retenues
 
@@ -74,3 +75,22 @@ docker compose logs minio-init
 ```
 
 `/health` renvoie `OK`. `/catalog` renvoie une liste de sources vide. Les journaux de `minio-init` montrent `documents`.
+
+## Bloc 1 — Carte
+
+Avec Compose, backend (profil `dev`) et frontend démarrés :
+
+- Ouvrir `http://localhost:3000/pt/map` (lien « Mapa » dans l’en-tête).
+- Page 0 : 20 marqueurs et « 1–20 de 24 » ; Suivant → « 21–24 de 24 ».
+- Clic marqueur : popup (badge + summary). Clic liste : popup ; la carte ne se déplace que si le point est hors vue.
+- Filtres / pan-zoom : URL mise à jour ; coller l’URL restaure l’état. Changer de langue conserve la query string.
+
+```text
+curl.exe "http://localhost:8080/api/v1/properties?bbox=-15.70,11.80,-15.50,11.95"
+```
+
+Attendu : `totalElements` 24, `totalPages` 2, 20 items (`BIS-024` … `BIS-005`).
+
+Si les ports 3000 / 8080 sont pris, utiliser 3010 / 8081 et ajuster `NEXT_PUBLIC_API_URL` / CORS comme au cycle 0.
+
+Le seed (`db/seed`) ne s’applique qu’en profil `dev`. Pour recharger un seed modifié : `docker compose down -v` puis redémarrer.

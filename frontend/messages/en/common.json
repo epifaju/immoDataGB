@@ -2,6 +2,9 @@
   "appName": "Guinea-Bissau property and land data",
   "loading": "Loading…",
   "error": "The API could not be reached.",
+  "nav": {
+    "map": "Map"
+  },
   "health": {
     "title": "Platform status",
     "api": "API",

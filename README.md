@@ -40,6 +40,8 @@ cd backend
 .\mvnw.cmd spring-boot:run
 ```
 
+Spring Boot écoute sur le port par défaut 8080 et sert `GET /api/v1/health`. `frontend/.env.example` définit déjà `NEXT_PUBLIC_API_URL=http://localhost:8080`.
+
 5. Frontend, dans un autre terminal :
 
 ```text
@@ -66,8 +68,8 @@ La version PostGIS apparaît quand Compose et le backend tournent. PostGIS arrê
 Martin et MinIO :
 
 ```text
-curl http://127.0.0.1:3001/health
-curl http://127.0.0.1:3001/catalog
+curl.exe http://127.0.0.1:3001/health
+curl.exe http://127.0.0.1:3001/catalog
 docker compose logs minio-init
 ```
 

@@ -1,0 +1,32 @@
+{
+  "title": "Property details",
+  "notFound": "Property not found.",
+  "backToMap": "Back to map",
+  "reference": "Reference",
+  "address": "Address",
+  "confidence": "Confidence",
+  "docStatus": {
+    "title": "Documentation",
+    "none": "No documents",
+    "declared": "Declared",
+    "partial": "Partial",
+    "verified": "Verified",
+    "litigious": "Disputed"
+  },
+  "sources": {
+    "title": "Sources",
+    "empty": "No sources recorded.",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "observedAt": "Observed on {date}"
+  },
+  "sourceType": {
+    "agency_listing": "Agency listing",
+    "field_observation": "Field observation",
+    "scanned_doc": "Scanned document",
+    "institutional": "Institutional source",
+    "third_party_user": "Third-party user",
+    "partner": "Partner",
+    "open_layer": "Open layer"
+  }
+}

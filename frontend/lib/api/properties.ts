@@ -1,5 +1,24 @@
 import {fetchJson} from './http';
-import type {ApiResponse, PageResponse, PropertiesResult, PropertyMapItem} from './types';
+import type {
+  ApiResponse,
+  PageResponse,
+  PropertiesResult,
+  PropertyDetail,
+  PropertyDetailResult,
+  PropertyMapItem,
+  PropertySourcesResult,
+  SourceItem,
+} from './types';
+
+function isEnvelope(value: unknown): value is ApiResponse<unknown> {
+  if (value === null || typeof value !== 'object') {
+    return false;
+  }
+  const body = value as Partial<ApiResponse<unknown>>;
+  const messageOk = body.message === null || typeof body.message === 'string';
+  const metaOk = body.meta !== null && typeof body.meta === 'object';
+  return typeof body.success === 'boolean' && messageOk && metaOk && 'data' in body;
+}
 
 export type PropertiesQuery = {
   bbox: string;
@@ -46,4 +65,36 @@ export async function fetchProperties(
     throw new Error('NOT_JSON');
   }
   return {status, body};
+}
+
+export async function fetchPropertyDetail(
+  apiUrl: string,
+  id: string,
+  signal?: AbortSignal,
+): Promise<PropertyDetailResult> {
+  const {status, body} = await fetchJson<unknown>(`${apiUrl}/api/v1/properties/${id}`, {
+    headers: {Accept: 'application/json'},
+    cache: 'no-store',
+    signal,
+  });
+  if (!isEnvelope(body)) {
+    throw new Error('NOT_JSON');
+  }
+  return {status, body: body as ApiResponse<PropertyDetail | null>};
+}
+
+export async function fetchPropertySources(
+  apiUrl: string,
+  id: string,
+  signal?: AbortSignal,
+): Promise<PropertySourcesResult> {
+  const {status, body} = await fetchJson<unknown>(`${apiUrl}/api/v1/properties/${id}/sources`, {
+    headers: {Accept: 'application/json'},
+    cache: 'no-store',
+    signal,
+  });
+  if (!isEnvelope(body)) {
+    throw new Error('NOT_JSON');
+  }
+  return {status, body: body as ApiResponse<SourceItem[] | null>};
 }

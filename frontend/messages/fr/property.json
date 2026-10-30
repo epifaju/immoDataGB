@@ -1,0 +1,32 @@
+{
+  "title": "Fiche du bien",
+  "notFound": "Bien introuvable.",
+  "backToMap": "Retour à la carte",
+  "reference": "Référence",
+  "address": "Adresse",
+  "confidence": "Confiance",
+  "docStatus": {
+    "title": "Documentation",
+    "none": "Aucun document",
+    "declared": "Déclarée",
+    "partial": "Partielle",
+    "verified": "Vérifiée",
+    "litigious": "Litigieuse"
+  },
+  "sources": {
+    "title": "Sources",
+    "empty": "Aucune source enregistrée.",
+    "verified": "Vérifiée",
+    "unverified": "Non vérifiée",
+    "observedAt": "Observée le {date}"
+  },
+  "sourceType": {
+    "agency_listing": "Annonce d'agence",
+    "field_observation": "Observation de terrain",
+    "scanned_doc": "Document numérisé",
+    "institutional": "Source institutionnelle",
+    "third_party_user": "Utilisateur tiers",
+    "partner": "Partenaire",
+    "open_layer": "Couche ouverte"
+  }
+}

@@ -8,6 +8,9 @@ import ptErrors from './pt/errors.json';
 import enMap from './en/map.json';
 import frMap from './fr/map.json';
 import ptMap from './pt/map.json';
+import enProperty from './en/property.json';
+import frProperty from './fr/property.json';
+import ptProperty from './pt/property.json';
 
 function leafKeys(value: unknown, prefix = ''): string[] {
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
@@ -31,4 +34,9 @@ test('error locales share the same keys', () => {
 test('map locales share the same keys', () => {
   expect(leafKeys(frMap).sort()).toEqual(leafKeys(ptMap).sort());
   expect(leafKeys(enMap).sort()).toEqual(leafKeys(ptMap).sort());
+});
+
+test('property locales share the same keys', () => {
+  expect(leafKeys(frProperty).sort()).toEqual(leafKeys(ptProperty).sort());
+  expect(leafKeys(enProperty).sort()).toEqual(leafKeys(ptProperty).sort());
 });

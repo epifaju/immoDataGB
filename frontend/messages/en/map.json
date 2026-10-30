@@ -22,5 +22,8 @@
     "range": "{from}–{to} of {total}",
     "previous": "Previous",
     "next": "Next"
+  },
+  "popup": {
+    "viewDetails": "View details"
   }
 }

@@ -22,5 +22,8 @@
     "range": "{from}–{to} de {total}",
     "previous": "Anterior",
     "next": "Seguinte"
+  },
+  "popup": {
+    "viewDetails": "Ver ficha"
   }
 }

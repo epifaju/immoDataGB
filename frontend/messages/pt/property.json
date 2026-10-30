@@ -1,0 +1,32 @@
+{
+  "title": "Ficha do imóvel",
+  "notFound": "Imóvel não encontrado.",
+  "backToMap": "Voltar ao mapa",
+  "reference": "Referência",
+  "address": "Endereço",
+  "confidence": "Confiança",
+  "docStatus": {
+    "title": "Documentação",
+    "none": "Sem documentação",
+    "declared": "Declarada",
+    "partial": "Parcial",
+    "verified": "Verificada",
+    "litigious": "Em litígio"
+  },
+  "sources": {
+    "title": "Fontes",
+    "empty": "Nenhuma fonte registada.",
+    "verified": "Verificada",
+    "unverified": "Não verificada",
+    "observedAt": "Observada em {date}"
+  },
+  "sourceType": {
+    "agency_listing": "Anúncio de agência",
+    "field_observation": "Observação de campo",
+    "scanned_doc": "Documento digitalizado",
+    "institutional": "Fonte institucional",
+    "third_party_user": "Utilizador terceiro",
+    "partner": "Parceiro",
+    "open_layer": "Camada aberta"
+  }
+}

@@ -2,12 +2,16 @@ package com.immodata.gb.api.property;
 
 import com.immodata.gb.api.ApiResponse;
 import com.immodata.gb.api.PageResponse;
+import com.immodata.gb.api.error.ApiException;
+import com.immodata.gb.application.property.PropertyDetail;
 import com.immodata.gb.application.property.PropertyMapItem;
 import com.immodata.gb.application.property.PropertyQuery;
 import com.immodata.gb.application.property.PropertyQueryService;
+import com.immodata.gb.application.property.SourceItem;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,17 +32,24 @@ public class PropertyController {
             @RequestParam MultiValueMap<String, String> params) {
         PropertyQuery query = PropertyRequestParser.parseList(params);
         PageResponse<PropertyMapItem> page = propertyQueryService.list(query);
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.noStore())
-                .body(new ApiResponse<>(true, page, null, Map.of()));
+        return ResponseEntity.ok().body(new ApiResponse<>(true, page, null, Map.of()));
     }
 
     @GetMapping("/api/v1/properties/{id}")
-    public ResponseEntity<ApiResponse<PropertyMapItem>> get(@PathVariable("id") String id) {
+    public ResponseEntity<ApiResponse<PropertyDetail>> get(@PathVariable("id") String id) {
         UUID uuid = PropertyRequestParser.parseId(id);
-        PropertyMapItem item = propertyQueryService.get(uuid);
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.noStore())
-                .body(new ApiResponse<>(true, item, null, Map.of()));
+        PropertyDetail detail = propertyQueryService
+                .getDetail(uuid)
+                .orElseThrow(() -> new ApiException("PROPERTY_NOT_FOUND", HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok().body(new ApiResponse<>(true, detail, null, Map.of()));
+    }
+
+    @GetMapping("/api/v1/properties/{id}/sources")
+    public ResponseEntity<ApiResponse<List<SourceItem>>> sources(@PathVariable("id") String id) {
+        UUID uuid = PropertyRequestParser.parseId(id);
+        List<SourceItem> sources = propertyQueryService
+                .listSources(uuid)
+                .orElseThrow(() -> new ApiException("PROPERTY_NOT_FOUND", HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok().body(new ApiResponse<>(true, sources, null, Map.of()));
     }
 }

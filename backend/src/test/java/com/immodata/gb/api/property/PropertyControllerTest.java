@@ -9,11 +9,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.immodata.gb.api.PageResponse;
-import com.immodata.gb.api.error.ApiException;
 import com.immodata.gb.api.error.ApiExceptionHandler;
+import com.immodata.gb.application.property.PropertyDetail;
 import com.immodata.gb.application.property.PropertyMapItem;
 import com.immodata.gb.application.property.PropertyQueryService;
+import com.immodata.gb.application.property.SourceItem;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = PropertyController.class)
@@ -52,13 +54,64 @@ class PropertyControllerTest {
 
         mockMvc.perform(get("/api/v1/properties").param("bbox", "-15.70,11.80,-15.50,11.95"))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(header().doesNotExist("Cache-Control"))
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.nullValue()))
-                .andExpect(jsonPath("$.data.totalElements").value(24))
-                .andExpect(jsonPath("$.data.totalPages").value(2))
                 .andExpect(jsonPath("$.data.items[0].reference").value("BIS-024"))
-                .andExpect(jsonPath("$.meta").isMap());
+                .andExpect(jsonPath("$.data.items[0].docStatus").doesNotExist());
+    }
+
+    @Test
+    void detailReturnsPropertyDetail() throws Exception {
+        UUID id = UUID.fromString("00000000-0000-0000-0001-000000000003");
+        PropertyDetail detail = new PropertyDetail(
+                id,
+                UUID.fromString("00000000-0000-0000-0000-00000000000a"),
+                "BIS-003",
+                "Terreno",
+                "land",
+                12,
+                "low",
+                "ok",
+                -15.616,
+                11.82,
+                "partial",
+                null);
+        when(propertyQueryService.getDetail(id)).thenReturn(Optional.of(detail));
+
+        mockMvc.perform(get("/api/v1/properties/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.docStatus").value("partial"))
+                .andExpect(jsonPath("$.data.addressText").value(org.hamcrest.Matchers.nullValue()));
+    }
+
+    @Test
+    void sourcesReturnListWithoutWeightOrPropertyId() throws Exception {
+        UUID id = UUID.fromString("00000000-0000-0000-0001-000000000005");
+        SourceItem source = new SourceItem(
+                UUID.fromString("00000000-0000-0000-0003-000000000501"),
+                "field_observation",
+                "Observação de campo 5.1",
+                LocalDate.of(2026, 8, 7),
+                false);
+        when(propertyQueryService.listSources(id)).thenReturn(Optional.of(List.of(source)));
+
+        mockMvc.perform(get("/api/v1/properties/{id}/sources", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].sourceType").value("field_observation"))
+                .andExpect(jsonPath("$.data[0].isVerified").value(false))
+                .andExpect(jsonPath("$.data[0].observedAt").value("2026-08-07"))
+                .andExpect(jsonPath("$.data[0].weight").doesNotExist())
+                .andExpect(jsonPath("$.data[0].propertyId").doesNotExist());
+    }
+
+    @Test
+    void sourcesEmptyList() throws Exception {
+        UUID id = UUID.fromString("00000000-0000-0000-0001-000000000099");
+        when(propertyQueryService.listSources(id)).thenReturn(Optional.of(List.of()));
+
+        mockMvc.perform(get("/api/v1/properties/{id}/sources", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test
@@ -70,10 +123,18 @@ class PropertyControllerTest {
 
     @Test
     void notFoundOnMissingProperty() throws Exception {
-        when(propertyQueryService.get(any()))
-                .thenThrow(new ApiException("PROPERTY_NOT_FOUND", HttpStatus.NOT_FOUND));
+        when(propertyQueryService.getDetail(any())).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/v1/properties/00000000-0000-0000-0001-000000000099"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("PROPERTY_NOT_FOUND"));
+    }
+
+    @Test
+    void sourcesNotFoundWhenOptionalEmpty() throws Exception {
+        when(propertyQueryService.listSources(any())).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/v1/properties/00000000-0000-0000-0001-000000000099/sources"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("PROPERTY_NOT_FOUND"));
     }

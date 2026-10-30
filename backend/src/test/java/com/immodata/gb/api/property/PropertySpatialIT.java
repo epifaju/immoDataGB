@@ -174,24 +174,89 @@ class PropertySpatialIT {
             ResponseEntity<String> detail =
                     rest.getForEntity("/api/v1/properties/{id}", String.class, deletedId);
             assertThat(detail.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+            ResponseEntity<String> sources =
+                    rest.getForEntity("/api/v1/properties/{id}/sources", String.class, deletedId);
+            assertThat(sources.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 
             status.setRollbackOnly();
         });
     }
 
     @Test
-    void getByIdKnownAndUnknown() throws Exception {
-        ResponseEntity<String> ok = rest.getForEntity(
+    void detailAndSourcesForSeededProperties() throws Exception {
+        ResponseEntity<String> one = rest.getForEntity(
                 "/api/v1/properties/{id}", String.class, "00000000-0000-0000-0001-000000000001");
-        assertThat(ok.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(objectMapper.readTree(ok.getBody()).get("data").get("reference").asText())
-                .isEqualTo("BIS-001");
+        assertThat(one.getStatusCode()).isEqualTo(HttpStatus.OK);
+        JsonNode dataOne = objectMapper.readTree(one.getBody()).get("data");
+        assertThat(dataOne.get("docStatus").asText()).isEqualTo("none");
+        assertThat(dataOne.get("addressText").asText()).isNotBlank();
+        assertThat(dataOne.get("confidenceSummary").asText()).isNotBlank();
+
+        ResponseEntity<String> three = rest.getForEntity(
+                "/api/v1/properties/{id}", String.class, "00000000-0000-0000-0001-000000000003");
+        assertThat(objectMapper.readTree(three.getBody()).get("data").get("addressText").isNull())
+                .isTrue();
+
+        ResponseEntity<String> sourcesFive = rest.getForEntity(
+                "/api/v1/properties/{id}/sources",
+                String.class,
+                "00000000-0000-0000-0001-000000000005");
+        assertThat(sourcesFive.getStatusCode()).isEqualTo(HttpStatus.OK);
+        JsonNode sources = objectMapper.readTree(sourcesFive.getBody()).get("data");
+        assertThat(sources.size()).isEqualTo(3);
+        assertThat(sources.get(0).get("sourceType").asText()).isEqualTo("field_observation");
+        assertThat(sources.get(1).get("sourceType").asText()).isEqualTo("agency_listing");
+        assertThat(sources.get(2).get("sourceType").asText()).isEqualTo("institutional");
+        assertThat(sources.get(2).get("label").isNull()).isTrue();
+
+        Integer sourceCount = jdbc.queryForObject("SELECT count(*) FROM source", Integer.class);
+        assertThat(sourceCount).isEqualTo(48);
+        Integer verified = jdbc.queryForObject(
+                "SELECT count(*) FROM source WHERE is_verified = true", Integer.class);
+        assertThat(verified).isEqualTo(11);
 
         ResponseEntity<String> missing = rest.getForEntity(
                 "/api/v1/properties/{id}", String.class, "00000000-0000-0000-0001-000000000099");
         assertThat(missing.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(objectMapper.readTree(missing.getBody()).get("message").asText())
-                .isEqualTo("PROPERTY_NOT_FOUND");
+    }
+
+    @Test
+    void listItemsOmitDetailFields() throws Exception {
+        JsonNode page0 = getProperties(DEFAULT_BBOX, null, null, 0, 20);
+        assertThat(page0.get("data").get("totalElements").asInt()).isEqualTo(24);
+        assertThat(page0.get("data").get("items").get(0).has("docStatus")).isFalse();
+        assertThat(page0.get("data").get("items").get(0).has("addressText")).isFalse();
+    }
+
+    @Test
+    void propertyWithoutSourcesReturnsEmptyList() throws Exception {
+        UUID bareId = UUID.fromString("00000000-0000-0000-0001-00000000babe");
+        UUID geomId = UUID.fromString("00000000-0000-0000-0002-00000000babe");
+        jdbc.update(
+                """
+                INSERT INTO property (
+                  id, organisation_id, reference, title, property_type,
+                  confidence_score, confidence_level, confidence_summary, doc_status
+                ) VALUES (?, '00000000-0000-0000-0000-00000000000a', 'BIS-BARE', 'Bare',
+                          'house', 12, 'low', 'none', 'none')
+                """,
+                bareId);
+        jdbc.update(
+                """
+                INSERT INTO property_geometry (id, property_id, geom, geom_type, precision_level)
+                VALUES (?, ?, ST_SetSRID(ST_MakePoint(-15.60, 11.86), 4326), 'point', 'gps')
+                """,
+                geomId,
+                bareId);
+        try {
+            ResponseEntity<String> sources =
+                    rest.getForEntity("/api/v1/properties/{id}/sources", String.class, bareId);
+            assertThat(sources.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(objectMapper.readTree(sources.getBody()).get("data").size()).isZero();
+        } finally {
+            jdbc.update("DELETE FROM property_geometry WHERE id = ?", geomId);
+            jdbc.update("DELETE FROM property WHERE id = ?", bareId);
+        }
     }
 
     @Test

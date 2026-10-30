@@ -1,27 +1,36 @@
 package com.immodata.gb.application.property;
 
 import com.immodata.gb.api.PageResponse;
-import com.immodata.gb.api.error.ApiException;
 import com.immodata.gb.infrastructure.persistence.property.PropertySpatialRepository;
+import com.immodata.gb.infrastructure.persistence.property.SourceRepository;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PropertyQueryService {
-    private final PropertySpatialRepository repository;
+    private final PropertySpatialRepository propertySpatialRepository;
+    private final SourceRepository sourceRepository;
 
-    public PropertyQueryService(PropertySpatialRepository repository) {
-        this.repository = repository;
+    public PropertyQueryService(
+            PropertySpatialRepository propertySpatialRepository, SourceRepository sourceRepository) {
+        this.propertySpatialRepository = propertySpatialRepository;
+        this.sourceRepository = sourceRepository;
     }
 
     public PageResponse<PropertyMapItem> list(PropertyQuery query) {
-        return repository.search(query);
+        return propertySpatialRepository.search(query);
     }
 
-    public PropertyMapItem get(UUID id) {
-        return repository
-                .findById(id)
-                .orElseThrow(() -> new ApiException("PROPERTY_NOT_FOUND", HttpStatus.NOT_FOUND));
+    public Optional<PropertyDetail> getDetail(UUID id) {
+        return propertySpatialRepository.findDetailById(id);
+    }
+
+    public Optional<List<SourceItem>> listSources(UUID id) {
+        if (!propertySpatialRepository.existsActiveById(id)) {
+            return Optional.empty();
+        }
+        return Optional.of(sourceRepository.listByPropertyId(id));
     }
 }

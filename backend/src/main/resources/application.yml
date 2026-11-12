@@ -5,3 +5,7 @@ spring:
     default: dev
   jackson:
     default-property-inclusion: always
+
+app:
+  confidence:
+    recalculation-enabled: false

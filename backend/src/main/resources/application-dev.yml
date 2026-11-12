@@ -11,5 +11,7 @@ spring:
     locations: classpath:db/migration,classpath:db/seed
 
 app:
+  confidence:
+    recalculation-enabled: true
   cors:
     allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:3000}

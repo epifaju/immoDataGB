@@ -116,3 +116,19 @@ Le seed (`db/seed`) ne s’applique qu’en profil `dev`. Il est idempotent (bie
 curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000001"
 curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000005/sources"
 ```
+
+## Bloc 3 — Confiance
+
+Le recalcul est protégé par le drapeau `app.confidence.recalculation-enabled` : `false` par défaut (`application.yml`, les deux `POST` répondent 404 `NOT_FOUND`), `true` avec le profil `dev`.
+
+Avec le profil `dev` (drapeau à `true`) :
+
+```text
+curl.exe -X POST "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000003/confidence/recalculate"
+curl.exe -X POST "http://localhost:8080/api/v1/organisations/00000000-0000-0000-0000-00000000000a/confidence/recalculate"
+curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000003/sources"
+```
+
+Rafraîchir la fiche et la carte après le recalcul : le bien 3 affiche 30/100 avec le résumé généré `Pontuação 30/100 (baixa). Critérios: 1 unidade de fonte (+20); documentação parcial (+10).`, et trois biens (4, 14, 19) sont `high`. Ce résumé reste en portugais, quelle que soit la langue de l'interface. `GET …/sources` inclut `weight` ; la fiche l'affiche à côté de la pastille vérifiée.
+
+Pour retrouver les scores d'origine du seed : `docker compose down -v`.

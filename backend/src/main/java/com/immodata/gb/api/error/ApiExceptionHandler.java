@@ -2,6 +2,7 @@ package com.immodata.gb.api.error;
 
 import com.immodata.gb.api.ApiResponse;
 import com.immodata.gb.api.health.HealthView;
+import com.immodata.gb.application.confidence.ConfidenceRuleInvalidException;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,19 @@ public class ApiExceptionHandler {
             HttpRequestMethodNotSupportedException exception) {
         ApiResponse<Object> body = new ApiResponse<>(false, null, "METHOD_NOT_ALLOWED", Map.of());
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .cacheControl(CacheControl.noStore())
+                .body(body);
+    }
+
+    @ExceptionHandler(ConfidenceRuleInvalidException.class)
+    public ResponseEntity<ApiResponse<Object>> confidenceRuleInvalid(ConfidenceRuleInvalidException exception) {
+        log.error(
+                "Invalid active confidence rule id={} name={}",
+                exception.getRuleId(),
+                exception.getRuleName(),
+                exception);
+        ApiResponse<Object> body = new ApiResponse<>(false, null, "INTERNAL_ERROR", Map.of());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .cacheControl(CacheControl.noStore())
                 .body(body);
     }

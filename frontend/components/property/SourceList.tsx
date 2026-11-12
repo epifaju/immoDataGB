@@ -37,15 +37,20 @@ export function SourceList({sources}: {sources: SourceItem[]}) {
                 {t('sources.observedAt', {date: formatIsoDate(source.observedAt, locale)})}
               </div>
             ) : null}
-            <span
-              className={`mt-1 inline-block rounded px-2 py-0.5 text-xs ${
-                source.isVerified
-                  ? 'bg-cyan-100 text-cyan-800'
-                  : 'bg-slate-100 text-slate-700'
-              }`}
-            >
-              {source.isVerified ? t('sources.verified') : t('sources.unverified')}
-            </span>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-block rounded px-2 py-0.5 text-xs ${
+                  source.isVerified
+                    ? 'bg-cyan-100 text-cyan-800'
+                    : 'bg-slate-100 text-slate-700'
+                }`}
+              >
+                {source.isVerified ? t('sources.verified') : t('sources.unverified')}
+              </span>
+              <span className="text-xs text-slate-600">
+                {t('sources.weight', {weight: source.weight})}
+              </span>
+            </div>
           </li>
         );
       })}

@@ -18,7 +18,8 @@
     "empty": "Aucune source enregistrée.",
     "verified": "Vérifiée",
     "unverified": "Non vérifiée",
-    "observedAt": "Observée le {date}"
+    "observedAt": "Observée le {date}",
+    "weight": "Poids : {weight}"
   },
   "sourceType": {
     "agency_listing": "Annonce d'agence",

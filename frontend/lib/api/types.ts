@@ -68,6 +68,7 @@ export type SourceItem = {
   label: string | null;
   observedAt: string | null;
   isVerified: boolean;
+  weight: number;
 };
 
 export type PropertiesResult = {

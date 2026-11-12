@@ -18,7 +18,8 @@
     "empty": "No sources recorded.",
     "verified": "Verified",
     "unverified": "Unverified",
-    "observedAt": "Observed on {date}"
+    "observedAt": "Observed on {date}",
+    "weight": "Weight: {weight}"
   },
   "sourceType": {
     "agency_listing": "Agency listing",

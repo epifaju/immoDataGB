@@ -27,12 +27,14 @@ describe('SourceList', () => {
         label: 'Cadastro municipal',
         observedAt: '2026-03-04',
         isVerified: true,
+        weight: 3,
       },
     ]);
     expect(screen.getByText('Cadastro municipal')).toBeTruthy();
     expect(screen.getByText('Fonte institucional')).toBeTruthy();
     expect(screen.getByText(/Observada em/)).toBeTruthy();
     expect(screen.getByText('Verificada')).toBeTruthy();
+    expect(screen.getByText('Peso: 3')).toBeTruthy();
   });
 
   test('uses translated type as title when label missing', () => {
@@ -43,10 +45,12 @@ describe('SourceList', () => {
         label: null,
         observedAt: null,
         isVerified: false,
+        weight: 2,
       },
     ]);
     expect(screen.getByText('Observação de campo')).toBeTruthy();
     expect(screen.getByText('Não verificada')).toBeTruthy();
+    expect(screen.getByText('Peso: 2')).toBeTruthy();
   });
 
   test('falls back to raw type for unknown sourceType', () => {
@@ -57,8 +61,10 @@ describe('SourceList', () => {
         label: null,
         observedAt: null,
         isVerified: false,
+        weight: 1,
       },
     ]);
     expect(screen.getByText('custom_feed')).toBeTruthy();
+    expect(screen.getByText('Peso: 1')).toBeTruthy();
   });
 });

@@ -15,7 +15,8 @@ public class SourceRepository {
             rs.getString("source_type"),
             rs.getString("label"),
             rs.getObject("observed_at", LocalDate.class),
-            rs.getBoolean("is_verified"));
+            rs.getBoolean("is_verified"),
+            rs.getInt("weight"));
 
     private final JdbcClient jdbcClient;
 
@@ -27,7 +28,7 @@ public class SourceRepository {
         return jdbcClient
                 .sql(
                         """
-                        SELECT s.id, s.source_type, s.label, s.observed_at, s.is_verified
+                        SELECT s.id, s.source_type, s.label, s.observed_at, s.is_verified, s.weight
                         FROM source s
                         WHERE s.property_id = :id
                         ORDER BY s.created_at ASC, s.id

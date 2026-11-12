@@ -208,6 +208,13 @@ class PropertySpatialIT {
         assertThat(sources.get(1).get("sourceType").asText()).isEqualTo("agency_listing");
         assertThat(sources.get(2).get("sourceType").asText()).isEqualTo("institutional");
         assertThat(sources.get(2).get("label").isNull()).isTrue();
+        assertThat(sources.get(0).get("weight").asInt()).isEqualTo(2);
+        assertThat(sources.get(1).get("weight").asInt()).isEqualTo(1);
+        assertThat(sources.get(2).get("weight").asInt()).isEqualTo(3);
+        for (JsonNode source : sources) {
+            assertThat(source.has("propertyId")).isFalse();
+            assertThat(source.has("verified")).isFalse();
+        }
 
         Integer sourceCount = jdbc.queryForObject("SELECT count(*) FROM source", Integer.class);
         assertThat(sourceCount).isEqualTo(48);

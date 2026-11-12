@@ -85,14 +85,15 @@ class PropertyControllerTest {
     }
 
     @Test
-    void sourcesReturnListWithoutWeightOrPropertyId() throws Exception {
+    void sourcesReturnWeightWithoutPropertyIdOrVerified() throws Exception {
         UUID id = UUID.fromString("00000000-0000-0000-0001-000000000005");
         SourceItem source = new SourceItem(
                 UUID.fromString("00000000-0000-0000-0003-000000000501"),
                 "field_observation",
                 "Observação de campo 5.1",
                 LocalDate.of(2026, 8, 7),
-                false);
+                false,
+                2);
         when(propertyQueryService.listSources(id)).thenReturn(Optional.of(List.of(source)));
 
         mockMvc.perform(get("/api/v1/properties/{id}/sources", id))
@@ -100,8 +101,9 @@ class PropertyControllerTest {
                 .andExpect(jsonPath("$.data[0].sourceType").value("field_observation"))
                 .andExpect(jsonPath("$.data[0].isVerified").value(false))
                 .andExpect(jsonPath("$.data[0].observedAt").value("2026-08-07"))
-                .andExpect(jsonPath("$.data[0].weight").doesNotExist())
-                .andExpect(jsonPath("$.data[0].propertyId").doesNotExist());
+                .andExpect(jsonPath("$.data[0].weight").value(2))
+                .andExpect(jsonPath("$.data[0].propertyId").doesNotExist())
+                .andExpect(jsonPath("$.data[0].verified").doesNotExist());
     }
 
     @Test

@@ -25,6 +25,9 @@ frontend/out/
 id_rsa*
 *.crt
 
+# Git worktrees (local isolation)
+.worktrees/
+
 # IDE / OS / agent scratch
 .idea/
 *.iml

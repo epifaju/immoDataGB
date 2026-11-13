@@ -1,0 +1,43 @@
+{
+  "title": "Estimation par comparables",
+  "intro": "Estimation en XOF fondée sur des observations comparables proches. Le résultat est toujours une fourchette, jamais une valeur unique.",
+  "form": {
+    "propertyType": "Type de bien",
+    "areaSqm": "Surface (m²)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radiusMeters": "Rayon (m)",
+    "periodMonths": "Période (mois)",
+    "submit": "Estimer",
+    "submitting": "Calcul en cours…"
+  },
+  "validation": {
+    "areaSqm": "La surface doit être supérieure à 0 et ne pas dépasser 1 000 000 m².",
+    "latitude": "La latitude doit être comprise entre −90 et 90.",
+    "longitude": "La longitude doit être comprise entre −180 et 180.",
+    "radiusMeters": "Le rayon doit être un entier entre 100 et 50 000 m.",
+    "periodMonths": "La période doit être un entier entre 1 et 120 mois."
+  },
+  "warning": {
+    "title": "Avertissement",
+    "fallback": "Échantillon insuffisant (n={count}). L'estimation est indicative ; la prudence est recommandée."
+  },
+  "result": {
+    "title": "Résultat de l'estimation",
+    "range": "Fourchette estimée (total)",
+    "median": "Médiane (total)",
+    "perSqmRange": "Fourchette par m²",
+    "medianPerSqm": "Médiane par m²",
+    "count": "Comparables retenus : {count} sur {raw}",
+    "currencyNote": "Montants en XOF."
+  },
+  "comparables": {
+    "title": "Comparables",
+    "type": "Type",
+    "price": "Prix",
+    "area": "Surface (m²)",
+    "pricePerSqm": "Prix/m²",
+    "observedAt": "Date",
+    "distance": "Distance (m)"
+  }
+}

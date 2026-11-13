@@ -11,6 +11,9 @@ import ptMap from './pt/map.json';
 import enProperty from './en/property.json';
 import frProperty from './fr/property.json';
 import ptProperty from './pt/property.json';
+import enValuation from './en/valuation.json';
+import frValuation from './fr/valuation.json';
+import ptValuation from './pt/valuation.json';
 
 function leafKeys(value: unknown, prefix = ''): string[] {
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
@@ -40,6 +43,23 @@ test('document error codes exist in every locale', () => {
   for (const errors of [ptErrors, frErrors, enErrors]) {
     expect(Object.keys(errors).filter((key) => key.startsWith('DOCUMENT_')).length).toBe(7);
   }
+});
+
+test('valuation locales share the same keys', () => {
+  expect(leafKeys(frValuation).sort()).toEqual(leafKeys(ptValuation).sort());
+  expect(leafKeys(enValuation).sort()).toEqual(leafKeys(ptValuation).sort());
+});
+
+test('valuation error codes and nav label exist in every locale', () => {
+  for (const errors of [ptErrors, frErrors, enErrors]) {
+    expect(Object.keys(errors).filter((key) => key.startsWith('VALUATION_')).sort()).toEqual([
+      'VALUATION_NO_COMPARABLES',
+      'VALUATION_REQUEST_INVALID',
+    ]);
+  }
+  expect(ptCommon.nav.valuation).toBe('Avaliação');
+  expect(frCommon.nav.valuation).toBe('Estimation');
+  expect(enCommon.nav.valuation).toBe('Valuation');
 });
 
 test('property locales share the same keys', () => {

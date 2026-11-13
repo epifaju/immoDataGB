@@ -3,7 +3,8 @@
   "loading": "Loading…",
   "error": "The API could not be reached.",
   "nav": {
-    "map": "Map"
+    "map": "Map",
+    "valuation": "Valuation"
   },
   "health": {
     "title": "Platform status",

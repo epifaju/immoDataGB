@@ -10,5 +10,7 @@
   "DOCUMENT_FILE_MISSING": "File is missing.",
   "DOCUMENT_FILE_TOO_LARGE": "The file exceeds the 50 MB limit.",
   "DOCUMENT_FILE_TYPE_REJECTED": "File type not allowed.",
-  "DOCUMENT_STORAGE_UNAVAILABLE": "Document storage is unavailable."
+  "DOCUMENT_STORAGE_UNAVAILABLE": "Document storage is unavailable.",
+  "VALUATION_REQUEST_INVALID": "Invalid valuation request.",
+  "VALUATION_NO_COMPARABLES": "No comparables found for these criteria."
 }

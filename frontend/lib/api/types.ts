@@ -134,3 +134,45 @@ export type PropertySourcesResult = {
   status: number;
   body: ApiResponse<SourceItem[] | null>;
 };
+
+export type ValuationPropertyType = 'house' | 'apartment' | 'land' | 'commercial';
+
+export type EstimateRequest = {
+  propertyType: ValuationPropertyType;
+  areaSqm: number;
+  latitude: number;
+  longitude: number;
+  radiusMeters: number;
+  periodMonths: number;
+};
+
+export type ComparableItem = {
+  id: string;
+  propertyType: string;
+  priceXof: number;
+  areaSqm: number;
+  pricePerSqm: number;
+  observedAt: string;
+  distanceMeters: number;
+};
+
+export type EstimateResult = {
+  currency: string;
+  medianTotal: number;
+  rangeLow: number;
+  rangeHigh: number;
+  medianPricePerSqm: number;
+  rangeLowPricePerSqm: number;
+  rangeHighPricePerSqm: number;
+  comparablesCount: number;
+  comparablesRawCount: number;
+  confidenceScore: number;
+  confidenceLevel: 'low' | 'medium' | 'high';
+  warning: string | null;
+  comparables: ComparableItem[];
+};
+
+export type EstimateResponse = {
+  status: number;
+  body: ApiResponse<EstimateResult | null>;
+};

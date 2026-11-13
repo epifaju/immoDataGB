@@ -1,0 +1,43 @@
+{
+  "title": "Avaliação por comparáveis",
+  "intro": "Estimativa em XOF baseada em observações comparáveis próximas. O resultado é sempre um intervalo, nunca um valor único.",
+  "form": {
+    "propertyType": "Tipo de imóvel",
+    "areaSqm": "Área (m²)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radiusMeters": "Raio (m)",
+    "periodMonths": "Período (meses)",
+    "submit": "Estimar",
+    "submitting": "A calcular…"
+  },
+  "validation": {
+    "areaSqm": "A área deve ser superior a 0 e não exceder 1 000 000 m².",
+    "latitude": "A latitude deve estar entre −90 e 90.",
+    "longitude": "A longitude deve estar entre −180 e 180.",
+    "radiusMeters": "O raio deve ser um inteiro entre 100 e 50 000 m.",
+    "periodMonths": "O período deve ser um inteiro entre 1 e 120 meses."
+  },
+  "warning": {
+    "title": "Aviso",
+    "fallback": "Amostra insuficiente (n={count}). A estimativa é indicativa; recomenda-se prudência."
+  },
+  "result": {
+    "title": "Resultado da estimativa",
+    "range": "Intervalo estimado (total)",
+    "median": "Mediana (total)",
+    "perSqmRange": "Intervalo por m²",
+    "medianPerSqm": "Mediana por m²",
+    "count": "Comparáveis usados: {count} de {raw}",
+    "currencyNote": "Valores em XOF."
+  },
+  "comparables": {
+    "title": "Comparáveis",
+    "type": "Tipo",
+    "price": "Preço",
+    "area": "Área (m²)",
+    "pricePerSqm": "Preço/m²",
+    "observedAt": "Data",
+    "distance": "Distância (m)"
+  }
+}

@@ -10,5 +10,7 @@
   "DOCUMENT_FILE_MISSING": "Ficheiro em falta.",
   "DOCUMENT_FILE_TOO_LARGE": "O ficheiro excede o limite de 50 MB.",
   "DOCUMENT_FILE_TYPE_REJECTED": "Tipo de ficheiro não permitido.",
-  "DOCUMENT_STORAGE_UNAVAILABLE": "O armazenamento de documentos está indisponível."
+  "DOCUMENT_STORAGE_UNAVAILABLE": "O armazenamento de documentos está indisponível.",
+  "VALUATION_REQUEST_INVALID": "Pedido de avaliação inválido.",
+  "VALUATION_NO_COMPARABLES": "Nenhum comparável encontrado para estes critérios."
 }

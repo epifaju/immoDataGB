@@ -10,6 +10,7 @@ export default getRequestConfig(async ({requestLocale}) => {
   const errors = (await import(`../messages/${locale}/errors.json`)).default;
   const map = (await import(`../messages/${locale}/map.json`)).default;
   const property = (await import(`../messages/${locale}/property.json`)).default;
+  const valuation = (await import(`../messages/${locale}/valuation.json`)).default;
   return {
     locale,
     messages: {
@@ -17,6 +18,7 @@ export default getRequestConfig(async ({requestLocale}) => {
       errors,
       map,
       property,
+      valuation,
     },
   };
 });

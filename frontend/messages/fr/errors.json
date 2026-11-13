@@ -10,5 +10,7 @@
   "DOCUMENT_FILE_MISSING": "Fichier manquant.",
   "DOCUMENT_FILE_TOO_LARGE": "Le fichier dépasse la limite de 50 Mo.",
   "DOCUMENT_FILE_TYPE_REJECTED": "Type de fichier non autorisé.",
-  "DOCUMENT_STORAGE_UNAVAILABLE": "Le stockage des documents est indisponible."
+  "DOCUMENT_STORAGE_UNAVAILABLE": "Le stockage des documents est indisponible.",
+  "VALUATION_REQUEST_INVALID": "Demande d'estimation invalide.",
+  "VALUATION_NO_COMPARABLES": "Aucun comparable trouvé pour ces critères."
 }

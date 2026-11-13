@@ -35,6 +35,7 @@ export default async function LocaleLayout({
             <header className="flex items-center gap-4 p-4">
               <p>{t('appName')}</p>
               <Link href="/map">{t('nav.map')}</Link>
+              <Link href="/valuation">{t('nav.valuation')}</Link>
               <Suspense fallback={null}>
                 <LocaleSwitcher />
               </Suspense>

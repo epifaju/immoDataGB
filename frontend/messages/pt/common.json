@@ -3,7 +3,8 @@
   "loading": "A carregar…",
   "error": "Não foi possível contactar a API.",
   "nav": {
-    "map": "Mapa"
+    "map": "Mapa",
+    "valuation": "Avaliação"
   },
   "health": {
     "title": "Estado da plataforma",

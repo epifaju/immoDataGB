@@ -1,0 +1,43 @@
+{
+  "title": "Valuation by comparables",
+  "intro": "Estimate in XOF based on nearby comparable observations. The result is always a range, never a single value.",
+  "form": {
+    "propertyType": "Property type",
+    "areaSqm": "Area (sqm)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radiusMeters": "Radius (m)",
+    "periodMonths": "Period (months)",
+    "submit": "Estimate",
+    "submitting": "Calculating…"
+  },
+  "validation": {
+    "areaSqm": "Area must be greater than 0 and at most 1,000,000 sqm.",
+    "latitude": "Latitude must be between −90 and 90.",
+    "longitude": "Longitude must be between −180 and 180.",
+    "radiusMeters": "Radius must be an integer between 100 and 50,000 m.",
+    "periodMonths": "Period must be an integer between 1 and 120 months."
+  },
+  "warning": {
+    "title": "Warning",
+    "fallback": "Insufficient sample (n={count}). The estimate is indicative; caution is advised."
+  },
+  "result": {
+    "title": "Estimate result",
+    "range": "Estimated range (total)",
+    "median": "Median (total)",
+    "perSqmRange": "Range per sqm",
+    "medianPerSqm": "Median per sqm",
+    "count": "Comparables used: {count} of {raw}",
+    "currencyNote": "Amounts in XOF."
+  },
+  "comparables": {
+    "title": "Comparables",
+    "type": "Type",
+    "price": "Price",
+    "area": "Area (sqm)",
+    "pricePerSqm": "Price/sqm",
+    "observedAt": "Date",
+    "distance": "Distance (m)"
+  }
+}

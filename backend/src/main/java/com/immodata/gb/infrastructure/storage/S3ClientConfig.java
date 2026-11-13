@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.checksums.RequestChecksumCalculation;
+import software.amazon.awssdk.core.checksums.ResponseChecksumValidation;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
@@ -24,6 +26,8 @@ public class S3ClientConfig {
                 .region(Region.of(props.region()))
                 .credentialsProvider(credentials(props))
                 .forcePathStyle(true)
+                .requestChecksumCalculation(RequestChecksumCalculation.WHEN_REQUIRED)
+                .responseChecksumValidation(ResponseChecksumValidation.WHEN_REQUIRED)
                 .build();
     }
 
@@ -33,8 +37,12 @@ public class S3ClientConfig {
                 .endpointOverride(URI.create(props.endpoint()))
                 .region(Region.of(props.region()))
                 .credentialsProvider(credentials(props))
-                .serviceConfiguration(
-                        S3Configuration.builder().pathStyleAccessEnabled(true).build())
+                // SDK 2.31 : le presigner n'a pas WHEN_REQUIRED. Checksum coupé pour un GET signé ouvrable dans un navigateur.
+                // Ne pas le combiner avec WHEN_REQUIRED sur le même S3Client : le SDK refuse les deux.
+                .serviceConfiguration(S3Configuration.builder()
+                        .pathStyleAccessEnabled(true)
+                        .checksumValidationEnabled(false)
+                        .build())
                 .build();
     }
 

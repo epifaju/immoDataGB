@@ -30,7 +30,10 @@ class S3DocumentStorageTest {
             .endpointOverride(URI.create("http://localhost:9000"))
             .region(Region.US_EAST_1)
             .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("ak", "sk")))
-            .serviceConfiguration(S3Configuration.builder().pathStyleAccessEnabled(true).build())
+            .serviceConfiguration(S3Configuration.builder()
+                    .pathStyleAccessEnabled(true)
+                    .checksumValidationEnabled(false)
+                    .build())
             .build();
     private final S3DocumentStorage storage = new S3DocumentStorage(s3Client, presigner);
 
@@ -65,5 +68,6 @@ class S3DocumentStorageTest {
         assertThat(uri.getHost()).isEqualTo("localhost");
         assertThat(uri.getPath()).isEqualTo("/docs/org/prop/doc/file.pdf");
         assertThat(uri.getQuery()).contains("X-Amz-Expires=900").contains("X-Amz-Signature=");
+        assertThat(uri.getQuery().toLowerCase()).doesNotContain("checksum");
     }
 }

@@ -153,3 +153,19 @@ curl.exe -X DELETE "http://localhost:8080/api/v1/documents/{id}"
 ```
 
 Upload attendu : 201 et les métadonnées. La liste inclut le document. L'URL signée est exploitable au plus 15 minutes. Après `DELETE`, un nouveau `GET …/documents` ne le renvoie plus ; l'objet demeure dans le bucket `documents`.
+
+## Bloc 5 — Estimation par comparables
+
+`POST /api/v1/valuations/estimate` est ouvert (pas de drapeau ni d'authentification à ce stade). Il retourne la **médiane** et une **fourchette basse / haute** (IQR) en **XOF** ; il ne renvoie jamais de valeur ponctuelle seule. Les observations de comparables (migration V10) sont chargées par le seed `dev` : 36 observations, 9 par type (`house`, `apartment`, `land`, `commercial`).
+
+Corps JSON : `propertyType`, `areaSqm`, `latitude`, `longitude`, `radiusMeters` (100–50 000), `periodMonths` (1–120). Corps invalide : 400 `VALUATION_REQUEST_INVALID`. Aucun comparable dans le rayon : `VALUATION_NO_COMPARABLES`.
+
+Avec le profil `dev` et le backend démarrés, depuis PowerShell :
+
+```text
+curl.exe -X POST "http://localhost:8080/api/v1/valuations/estimate" -H "Content-Type: application/json" -d '{\"propertyType\":\"apartment\",\"areaSqm\":80,\"latitude\":11.863,\"longitude\":-15.598,\"radiusMeters\":5000,\"periodMonths\":24}'
+```
+
+Attendu : `currency` `XOF`, `comparablesCount` 7, médiane au m² 420 000, `medianTotal` 33 600 000, `rangeLow` / `rangeHigh` encadrant la médiane, `warning` nul. Avec `radiusMeters` 500, seuls 3 comparables restent : `comparablesCount` 3 et `warning` non nul (avertissement en portugais, **moins de 5 comparables**, estimation peu fiable). Avec `radiusMeters` 100 : `VALUATION_NO_COMPARABLES`.
+
+Interface : ouvrir `http://localhost:3000/pt/valuation` (lien « Avaliação » dans l'en-tête). Le formulaire affiche la fourchette en XOF, le badge de confiance et, quand l'échantillon compte moins de 5 comparables, l'avertissement visible ; la liste des comparables retenus suit le résultat.

@@ -9,6 +9,8 @@ import type {DocumentType} from '@/lib/api/types';
 import {DOCUMENT_TYPES} from '@/lib/api/types';
 import {useDocumentErrorMessage} from './documentErrors';
 
+const MAX_DOCUMENT_SIZE_BYTES = 52_428_800;
+
 type DocumentUploadProps = {
   propertyId: string;
   apiUrl: string;
@@ -54,6 +56,10 @@ export function DocumentUpload({propertyId, apiUrl}: DocumentUploadProps) {
     setSuccess(false);
     if (!file) {
       setError(t('documents.upload.fileRequired'));
+      return;
+    }
+    if (file.size > MAX_DOCUMENT_SIZE_BYTES) {
+      setError(errorMessage('DOCUMENT_FILE_TOO_LARGE'));
       return;
     }
     setError(null);

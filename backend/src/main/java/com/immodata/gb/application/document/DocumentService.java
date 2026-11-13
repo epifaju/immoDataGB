@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class DocumentService {
+
+    private static final Logger log = LoggerFactory.getLogger(DocumentService.class);
 
     private final DocumentRepository repository;
     private final DocumentFileValidator validator;
@@ -86,6 +90,7 @@ public class DocumentService {
         try (InputStream in = validated.openStream()) {
             storage.put(bucket, key, in, validated.sizeBytes(), validated.contentType());
         } catch (IOException | RuntimeException e) {
+            log.error("Document storage put failed bucket={} key={}", bucket, key, e);
             throw storageUnavailable();
         }
 
@@ -108,6 +113,8 @@ public class DocumentService {
             String url = storage.presignGet(row.storageBucket(), row.storageKey(), ttl).toString();
             return new SignedUrlResult(url, expiresAt);
         } catch (RuntimeException e) {
+            log.error(
+                    "Document storage presignGet failed bucket={} key={}", row.storageBucket(), row.storageKey(), e);
             throw storageUnavailable();
         }
     }

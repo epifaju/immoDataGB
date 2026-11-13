@@ -190,6 +190,20 @@ class DocumentFileValidatorTest {
     }
 
     @Test
+    void filenameLongerThan500IsRejected() {
+        String tooLong = "a".repeat(DocumentFileValidator.MAX_FILENAME_LENGTH - 3) + ".pdf";
+        assertEquals(DocumentFileValidator.MAX_FILENAME_LENGTH + 1, tooLong.length());
+        assertEquals("DOCUMENT_FILE_TYPE_REJECTED", codeOf(file(tooLong, PDF), validator));
+    }
+
+    @Test
+    void filenameOfExactly500IsAccepted() {
+        String atLimit = "a".repeat(DocumentFileValidator.MAX_FILENAME_LENGTH - 4) + ".pdf";
+        assertEquals(DocumentFileValidator.MAX_FILENAME_LENGTH, atLimit.length());
+        assertEquals(atLimit, validator.validate(file(atLimit, PDF)).originalFilename());
+    }
+
+    @Test
     void maxSizeConstantIsFiftyMebibytes() {
         assertEquals(52_428_800L, DocumentFileValidator.MAX_SIZE_BYTES);
     }

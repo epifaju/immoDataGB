@@ -56,6 +56,18 @@ describe('DocumentUpload', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  test('rejects files over 50 MiB client-side without calling the API', () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    renderUpload();
+    const big = new File(['x'], 'grande.pdf', {type: 'application/pdf'});
+    Object.defineProperty(big, 'size', {value: 52_428_801});
+    fireEvent.change(screen.getByLabelText('Ficheiro'), {target: {files: [big]}});
+    fireEvent.click(screen.getByRole('button', {name: 'Carregar'}));
+    expect(screen.getByRole('alert').textContent).toBe(ptErrors.DOCUMENT_FILE_TOO_LARGE);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   test('posts FormData with file and documentType then invalidates', async () => {
     const fetchMock = vi.fn(async () =>
       jsonResponse(

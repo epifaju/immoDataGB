@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
@@ -23,6 +24,14 @@ public class ApiExceptionHandler {
     public ResponseEntity<ApiResponse<Object>> apiException(ApiException exception) {
         ApiResponse<Object> body = new ApiResponse<>(false, null, exception.getCode(), Map.of());
         return ResponseEntity.status(exception.getStatus())
+                .cacheControl(CacheControl.noStore())
+                .body(body);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse<Object>> uploadTooLarge(MaxUploadSizeExceededException exception) {
+        ApiResponse<Object> body = new ApiResponse<>(false, null, "DOCUMENT_FILE_TOO_LARGE", Map.of());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .cacheControl(CacheControl.noStore())
                 .body(body);
     }

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DocumentFileValidator {
 
     public static final long MAX_SIZE_BYTES = 52_428_800L;
+    public static final int MAX_FILENAME_LENGTH = 500;
 
     private static final String DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     private static final String XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -52,6 +53,9 @@ public class DocumentFileValidator {
             throw reject("DOCUMENT_FILE_TOO_LARGE");
         }
         String originalFilename = file.getOriginalFilename();
+        if (originalFilename != null && originalFilename.length() > MAX_FILENAME_LENGTH) {
+            throw reject("DOCUMENT_FILE_TYPE_REJECTED");
+        }
         String extension = extensionOf(originalFilename);
         Set<String> allowedMimes = extension == null ? null : ALLOWED_MIMES.get(extension);
         if (allowedMimes == null) {

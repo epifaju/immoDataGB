@@ -128,6 +128,19 @@ class DocumentControllerTest {
     }
 
     @Test
+    void maxUploadSizeExceededMapsToDocumentFileTooLarge() throws Exception {
+        enabled(true);
+        org.mockito.Mockito.reset(service);
+        when(service.upload(any(), any(), any()))
+                .thenThrow(new org.springframework.web.multipart.MaxUploadSizeExceededException(52_428_800L));
+
+        mockMvc.perform(multipart(LIST_URL, PROPERTY_ID).file(file()).param("documentType", "titre_foncier"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.message").value("DOCUMENT_FILE_TOO_LARGE"));
+    }
+
+    @Test
     void uploadServiceErrorsAreMapped() throws Exception {
         enabled(true);
         org.mockito.Mockito.reset(service);

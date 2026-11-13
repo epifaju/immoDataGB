@@ -71,6 +71,55 @@ export type SourceItem = {
   weight: number;
 };
 
+export const DOCUMENT_TYPES = [
+  'titre_foncier',
+  'attestation_possession',
+  'contrat_vente',
+  'contrat_location',
+  'plan_parcelle',
+  'photo_terrain',
+  'piece_identite_masquee',
+  'acte_notarie',
+  'document_administratif',
+  'autre',
+] as const;
+export type DocumentType = (typeof DOCUMENT_TYPES)[number];
+
+export type DocumentItem = {
+  id: string;
+  propertyId: string;
+  documentType: string;
+  originalFilename: string;
+  contentType: string;
+  sizeBytes: number;
+  createdAt: string;
+};
+
+export type SignedUrlResult = {
+  url: string;
+  expiresAt: string;
+};
+
+export type PropertyDocumentsResult = {
+  status: number;
+  body: ApiResponse<DocumentItem[] | null>;
+};
+
+export type DocumentUploadResult = {
+  status: number;
+  body: ApiResponse<DocumentItem | null>;
+};
+
+export type SignedUrlResponse = {
+  status: number;
+  body: ApiResponse<SignedUrlResult | null>;
+};
+
+export type DocumentDeleteResult = {
+  status: number;
+  body: ApiResponse<null>;
+};
+
 export type PropertiesResult = {
   status: number;
   body: ApiResponse<PageResponse<PropertyMapItem> | null>;

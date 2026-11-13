@@ -29,5 +29,35 @@
     "third_party_user": "Utilizador terceiro",
     "partner": "Parceiro",
     "open_layer": "Camada aberta"
+  },
+  "documents": {
+    "title": "Documentos",
+    "empty": "Nenhum documento registado.",
+    "uploadedAt": "Carregado em {date}",
+    "size": "Tamanho: {size} KB",
+    "download": "Descarregar",
+    "delete": "Eliminar",
+    "deleteConfirm": "Eliminar este documento?",
+    "upload": {
+      "title": "Adicionar documento",
+      "file": "Ficheiro",
+      "type": "Tipo de documento",
+      "submit": "Carregar",
+      "submitting": "A carregar…",
+      "success": "Documento carregado.",
+      "fileRequired": "Selecione um ficheiro."
+    }
+  },
+  "documentType": {
+    "titre_foncier": "Título fundiário",
+    "attestation_possession": "Atestado de posse",
+    "contrat_vente": "Contrato de venda",
+    "contrat_location": "Contrato de arrendamento",
+    "plan_parcelle": "Planta da parcela",
+    "photo_terrain": "Fotografia do terreno",
+    "piece_identite_masquee": "Documento de identidade (ocultado)",
+    "acte_notarie": "Ato notarial",
+    "document_administratif": "Documento administrativo",
+    "autre": "Outro"
   }
 }

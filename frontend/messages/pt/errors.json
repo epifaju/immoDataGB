@@ -3,5 +3,12 @@
   "INTERNAL_ERROR": "Ocorreu um erro interno.",
   "PROPERTY_BBOX_INVALID": "A área do mapa é inválida.",
   "PROPERTY_FILTER_INVALID": "Filtro inválido.",
-  "PROPERTY_PAGE_INVALID": "Página inválida."
+  "PROPERTY_PAGE_INVALID": "Página inválida.",
+  "DOCUMENT_ID_INVALID": "Identificador de documento inválido.",
+  "DOCUMENT_NOT_FOUND": "Documento não encontrado.",
+  "DOCUMENT_TYPE_INVALID": "Tipo de documento inválido.",
+  "DOCUMENT_FILE_MISSING": "Ficheiro em falta.",
+  "DOCUMENT_FILE_TOO_LARGE": "O ficheiro excede o limite de 50 MB.",
+  "DOCUMENT_FILE_TYPE_REJECTED": "Tipo de ficheiro não permitido.",
+  "DOCUMENT_STORAGE_UNAVAILABLE": "O armazenamento de documentos está indisponível."
 }

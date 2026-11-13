@@ -36,6 +36,12 @@ test('map locales share the same keys', () => {
   expect(leafKeys(enMap).sort()).toEqual(leafKeys(ptMap).sort());
 });
 
+test('document error codes exist in every locale', () => {
+  for (const errors of [ptErrors, frErrors, enErrors]) {
+    expect(Object.keys(errors).filter((key) => key.startsWith('DOCUMENT_')).length).toBe(7);
+  }
+});
+
 test('property locales share the same keys', () => {
   expect(leafKeys(frProperty).sort()).toEqual(leafKeys(ptProperty).sort());
   expect(leafKeys(enProperty).sort()).toEqual(leafKeys(ptProperty).sort());

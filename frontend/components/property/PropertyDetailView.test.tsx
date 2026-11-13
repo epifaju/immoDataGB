@@ -192,6 +192,49 @@ describe('PropertyDetailView', () => {
     expect(href).not.toContain('page=');
   });
 
+  test('shows documents section with upload only when mutations enabled', async () => {
+    const documentsOk = {
+      success: true,
+      data: [
+        {
+          id: 'd1',
+          propertyId: detailOk.data.id,
+          documentType: 'contrat_vente',
+          originalFilename: 'contrato.pdf',
+          contentType: 'application/pdf',
+          sizeBytes: 1024,
+          createdAt: '2026-03-04T10:00:00Z',
+        },
+      ],
+      message: null,
+      meta: {},
+    };
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string) => {
+        if (String(url).endsWith('/documents')) {
+          return jsonResponse(documentsOk);
+        }
+        if (String(url).endsWith('/sources')) {
+          return jsonResponse({success: true, data: [], message: null, meta: {}});
+        }
+        return jsonResponse(detailOk);
+      }),
+    );
+    vi.stubEnv('NEXT_PUBLIC_DOCUMENTS_MUTATIONS_ENABLED', 'true');
+    const {unmount} = renderView();
+    expect(await screen.findByText('contrato.pdf')).toBeTruthy();
+    expect(screen.getByRole('heading', {name: 'Documentos'})).toBeTruthy();
+    expect(screen.getByRole('button', {name: 'Carregar'})).toBeTruthy();
+    unmount();
+
+    vi.stubEnv('NEXT_PUBLIC_DOCUMENTS_MUTATIONS_ENABLED', 'false');
+    renderView();
+    expect(await screen.findByText('contrato.pdf')).toBeTruthy();
+    expect(screen.queryByRole('button', {name: 'Carregar'})).toBeNull();
+    vi.unstubAllEnvs();
+  });
+
   test('does not fetch sources until detail succeeds', async () => {
     const fetchMock = vi.fn(async () =>
       jsonResponse(

@@ -29,5 +29,35 @@
     "third_party_user": "Third-party user",
     "partner": "Partner",
     "open_layer": "Open layer"
+  },
+  "documents": {
+    "title": "Documents",
+    "empty": "No documents recorded.",
+    "uploadedAt": "Uploaded on {date}",
+    "size": "Size: {size} KB",
+    "download": "Download",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this document?",
+    "upload": {
+      "title": "Add a document",
+      "file": "File",
+      "type": "Document type",
+      "submit": "Upload",
+      "submitting": "Uploading…",
+      "success": "Document uploaded.",
+      "fileRequired": "Select a file."
+    }
+  },
+  "documentType": {
+    "titre_foncier": "Land title",
+    "attestation_possession": "Certificate of possession",
+    "contrat_vente": "Sale contract",
+    "contrat_location": "Lease contract",
+    "plan_parcelle": "Parcel plan",
+    "photo_terrain": "Site photo",
+    "piece_identite_masquee": "ID document (redacted)",
+    "acte_notarie": "Notarial deed",
+    "document_administratif": "Administrative document",
+    "autre": "Other"
   }
 }

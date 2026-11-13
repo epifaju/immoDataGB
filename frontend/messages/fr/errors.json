@@ -3,5 +3,12 @@
   "INTERNAL_ERROR": "Une erreur interne s'est produite.",
   "PROPERTY_BBOX_INVALID": "La zone de la carte est invalide.",
   "PROPERTY_FILTER_INVALID": "Filtre invalide.",
-  "PROPERTY_PAGE_INVALID": "Page invalide."
+  "PROPERTY_PAGE_INVALID": "Page invalide.",
+  "DOCUMENT_ID_INVALID": "Identifiant de document invalide.",
+  "DOCUMENT_NOT_FOUND": "Document introuvable.",
+  "DOCUMENT_TYPE_INVALID": "Type de document invalide.",
+  "DOCUMENT_FILE_MISSING": "Fichier manquant.",
+  "DOCUMENT_FILE_TOO_LARGE": "Le fichier dépasse la limite de 50 Mo.",
+  "DOCUMENT_FILE_TYPE_REJECTED": "Type de fichier non autorisé.",
+  "DOCUMENT_STORAGE_UNAVAILABLE": "Le stockage des documents est indisponible."
 }

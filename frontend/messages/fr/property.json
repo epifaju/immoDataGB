@@ -29,5 +29,35 @@
     "third_party_user": "Utilisateur tiers",
     "partner": "Partenaire",
     "open_layer": "Couche ouverte"
+  },
+  "documents": {
+    "title": "Documents",
+    "empty": "Aucun document enregistré.",
+    "uploadedAt": "Ajouté le {date}",
+    "size": "Taille : {size} Ko",
+    "download": "Télécharger",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer ce document ?",
+    "upload": {
+      "title": "Ajouter un document",
+      "file": "Fichier",
+      "type": "Type de document",
+      "submit": "Téléverser",
+      "submitting": "Téléversement…",
+      "success": "Document téléversé.",
+      "fileRequired": "Sélectionnez un fichier."
+    }
+  },
+  "documentType": {
+    "titre_foncier": "Titre foncier",
+    "attestation_possession": "Attestation de possession",
+    "contrat_vente": "Contrat de vente",
+    "contrat_location": "Contrat de location",
+    "plan_parcelle": "Plan de parcelle",
+    "photo_terrain": "Photo du terrain",
+    "piece_identite_masquee": "Pièce d'identité (masquée)",
+    "acte_notarie": "Acte notarié",
+    "document_administratif": "Document administratif",
+    "autre": "Autre"
   }
 }

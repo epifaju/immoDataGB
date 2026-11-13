@@ -4,11 +4,14 @@ import {useQuery} from '@tanstack/react-query';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 import {useMemo} from 'react';
+import {fetchPropertyDocuments} from '@/lib/api/documents';
 import {fetchPropertyDetail, fetchPropertySources} from '@/lib/api/properties';
 import {Link} from '@/i18n/navigation';
 import {ConfidenceBadge} from '@/components/map/ConfidenceBadge';
 import {parseMapSearchParams, serializeMapSearchParams} from '@/lib/map/url-state';
 import {DocStatusBadge} from './DocStatusBadge';
+import {DocumentList} from './DocumentList';
+import {DocumentUpload} from './DocumentUpload';
 import {SourceList} from './SourceList';
 
 const DETAIL_ERROR_CODES = new Set([
@@ -46,6 +49,14 @@ export function PropertyDetailView({id}: {id: string}) {
   const sourcesQuery = useQuery({
     queryKey: ['property-sources', id],
     queryFn: ({signal}) => fetchPropertySources(apiUrl, id, signal),
+    enabled: Boolean(detailQuery.data?.body.success && detailQuery.data.body.data),
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const documentsQuery = useQuery({
+    queryKey: ['property-documents', id],
+    queryFn: ({signal}) => fetchPropertyDocuments(apiUrl, id, signal),
     enabled: Boolean(detailQuery.data?.body.success && detailQuery.data.body.data),
     retry: false,
     refetchOnWindowFocus: false,
@@ -118,6 +129,23 @@ export function PropertyDetailView({id}: {id: string}) {
     }
   }
 
+  const mutationsEnabled = process.env.NEXT_PUBLIC_DOCUMENTS_MUTATIONS_ENABLED === 'true';
+  let documentsError: string | null = null;
+  if (documentsQuery.isError) {
+    documentsError = tCommon('error');
+  } else if (documentsQuery.data && !documentsQuery.data.body.success) {
+    const code = documentsQuery.data.body.message;
+    if (code === 'PROPERTY_NOT_FOUND' || code === 'PROPERTY_ID_INVALID') {
+      documentsError = t('notFound');
+    } else if (code && DETAIL_ERROR_CODES.has(code)) {
+      documentsError = tErrors(code as 'INTERNAL_ERROR');
+    } else {
+      documentsError = tCommon('error');
+    }
+  }
+  const documentsData = documentsQuery.data?.body.data;
+  const documents = Array.isArray(documentsData) ? documentsData : [];
+
   return (
     <div className="mx-auto max-w-3xl space-y-6 p-4">
       <Link href={mapHref} className="text-sm text-blue-700 underline">
@@ -153,6 +181,22 @@ export function PropertyDetailView({id}: {id: string}) {
         ) : (
           <SourceList sources={sourcesQuery.data?.body.data ?? []} />
         )}
+      </section>
+      <section className="space-y-2">
+        <h2 className="text-xl font-medium">{t('documents.title')}</h2>
+        {documentsQuery.isLoading ? (
+          <div className="h-20 animate-pulse rounded bg-slate-200" />
+        ) : documentsError ? (
+          <p role="alert">{documentsError}</p>
+        ) : (
+          <DocumentList
+            documents={documents}
+            propertyId={id}
+            apiUrl={apiUrl}
+            mutationsEnabled={mutationsEnabled}
+          />
+        )}
+        {mutationsEnabled ? <DocumentUpload propertyId={id} apiUrl={apiUrl} /> : null}
       </section>
     </div>
   );

@@ -57,10 +57,15 @@ describe('ValuationResultView', () => {
     expect(screen.queryByRole('alert')).toBeNull();
   });
 
-  test('displays the API warning when present', () => {
-    const warning = 'Amostra insuficiente (n=3). A estimativa é indicativa; recomenda-se prudência.';
-    renderResult({...BASE, comparablesCount: 3, warning});
-    expect(screen.getByRole('alert').textContent).toContain(warning);
+  test('uses the localized warning when fewer than 5 comparables, ignoring API PT text', () => {
+    renderResult({
+      ...BASE,
+      comparablesCount: 3,
+      warning: 'Amostra insuficiente (n=3). Texto PT da API.',
+    });
+    expect(screen.getByRole('alert').textContent).toContain(
+      'Amostra insuficiente (n=3). A estimativa é indicativa; recomenda-se prudência.',
+    );
     expect(screen.getByTestId('range-low')).toBeTruthy();
     expect(screen.getByTestId('range-high')).toBeTruthy();
   });
@@ -72,3 +77,4 @@ describe('ValuationResultView', () => {
     );
   });
 });
+

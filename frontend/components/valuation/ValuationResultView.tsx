@@ -16,10 +16,9 @@ export function ValuationResultView({result}: {result: EstimateResult}) {
   const number = new Intl.NumberFormat(locale, {maximumFractionDigits: 2});
 
   const warning =
-    result.warning ??
-    (result.comparablesCount < MIN_COMPARABLES_WITHOUT_WARNING
+    result.comparablesCount < MIN_COMPARABLES_WITHOUT_WARNING
       ? t('warning.fallback', {count: result.comparablesCount})
-      : null);
+      : result.warning;
 
   return (
     <section className="space-y-4" aria-label={t('result.title')}>

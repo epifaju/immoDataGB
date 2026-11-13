@@ -5,7 +5,15 @@ spring:
     default: dev
   jackson:
     default-property-inclusion: always
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 
 app:
   confidence:
     recalculation-enabled: false
+  documents:
+    mutations-enabled: false
+    bucket: documents
+    signed-url-ttl: 15m

@@ -132,3 +132,24 @@ curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000
 Rafraîchir la fiche et la carte après le recalcul : le bien 3 affiche 30/100 avec le résumé généré `Pontuação 30/100 (baixa). Critérios: 1 unidade de fonte (+20); documentação parcial (+10).`, et trois biens (4, 14, 19) sont `high`. Ce résumé reste en portugais, quelle que soit la langue de l'interface. `GET …/sources` inclut `weight` ; la fiche l'affiche à côté de la pastille vérifiée.
 
 Pour retrouver les scores d'origine du seed : `docker compose down -v`.
+
+## Bloc 4 — Documents
+
+Les mutations (upload, URL signée, suppression) suivent `app.documents.mutations-enabled` : `false` par défaut (`application.yml`). Tant qu'il est faux, `POST` upload, `POST` signed-url et `DELETE` répondent 404 `NOT_FOUND` avant toute validation d'identifiant. Le profil `dev` le passe à `true`.
+
+L'interface n'affiche l'envoi, le téléchargement et la suppression que si `NEXT_PUBLIC_DOCUMENTS_MUTATIONS_ENABLED=true` (`frontend/.env.example`). L'URL signée dure 15 minutes et ne doit pas être mémorisée.
+
+Le bucket MinIO est `documents`. Le profil `dev` lit `APP_STORAGE_ENDPOINT`, `APP_STORAGE_ACCESS_KEY`, `APP_STORAGE_SECRET_KEY` et `APP_STORAGE_REGION`. Défauts jetables, identiques à `.env.example` : `http://127.0.0.1:9000`, `minioadmin`, `minioadmin`, `us-east-1`.
+
+`DELETE` est une suppression logique : le document disparaît de la liste, l'objet reste dans MinIO.
+
+Avec le profil `dev`, Compose (MinIO) et le backend démarrés, depuis PowerShell :
+
+```text
+curl.exe -F "file=@.\contrat.pdf;type=application/pdf" -F "documentType=contrat_vente" "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000001/documents"
+curl.exe "http://localhost:8080/api/v1/properties/00000000-0000-0000-0001-000000000001/documents"
+curl.exe -X POST "http://localhost:8080/api/v1/documents/{id}/signed-url"
+curl.exe -X DELETE "http://localhost:8080/api/v1/documents/{id}"
+```
+
+Upload attendu : 201 et les métadonnées. La liste inclut le document. L'URL signée est exploitable au plus 15 minutes. Après `DELETE`, un nouveau `GET …/documents` ne le renvoie plus ; l'objet demeure dans le bucket `documents`.

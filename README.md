@@ -235,3 +235,26 @@ Attendu : 201, `validationStatus` `pending_validation`, `reference` `FLD-…`, c
 
 Interface : `http://localhost:3000/pt/field/new` (lien « Terreno »). GPS via le navigateur ou saisie manuelle ; après succès, lien vers la fiche.
 
+## Bloc 7 — File de validation et journal d'audit
+
+`GET /api/v1/admin/validation-queue` liste les biens en `pending_validation` non supprimés (`page=0`, `size=20`, max `100`). Une observation terrain (Bloc 6.2) y figure tant qu'elle n'est pas validée.
+
+`POST /api/v1/admin/properties/{id}/validate` passe le bien à `validated`. Il devient alors visible sur la carte et dans la liste spatiale (`GET /api/v1/properties?bbox=…`). Réponse 200 : l'élément de file (`id`, `reference`, `title`, `propertyType`, `createdAt`, `latitude`, `longitude`).
+
+`POST /api/v1/admin/properties/{id}/reject` ne crée pas de statut `rejected`. Le bien est soft-deleted (`deleted_at`) : il quitte la file, la carte et le détail (`GET /api/v1/properties/{id}` → 404). Réponse 200 : `{ "id", "deleted": true }`.
+
+Les POST exigent `app.admin.mutations-enabled` : `false` par défaut (`application.yml`), `true` dans le profil `dev`. Drapeau off → 404 `NOT_FOUND`. Les GET (file et audit) restent ouverts. Bien absent, déjà validé ou déjà supprimé → 404 `PROPERTY_NOT_FOUND`. Page, taille ou date invalide → 400 `ADMIN_REQUEST_INVALID`. L'interface n'affiche Valider / Rejeter que si `NEXT_PUBLIC_ADMIN_MUTATIONS_ENABLED=true` (`frontend/.env.example`).
+
+Chaque validate ou reject écrit une ligne `audit_event` (`action` `validate` ou `reject`). `GET /api/v1/admin/audit` la consulte ; filtres optionnels : `entityType`, `action`, `from`, `to` (instant ISO-8601), `page`, `size`.
+
+Avec le profil `dev` et le backend démarrés :
+
+```text
+curl.exe "http://localhost:8080/api/v1/admin/validation-queue?page=0&size=20"
+curl.exe -X POST "http://localhost:8080/api/v1/admin/properties/{id}/validate"
+curl.exe -X POST "http://localhost:8080/api/v1/admin/properties/{id}/reject"
+curl.exe "http://localhost:8080/api/v1/admin/audit?entityType=property&action=validate&from=2026-11-01T00:00:00Z&page=0&size=20"
+```
+
+Interface : `http://localhost:3000/pt/admin/validation-queue` (lien « Fila de validação ») et `http://localhost:3000/pt/admin/audit` (lien « Auditoria »).
+

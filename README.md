@@ -169,3 +169,50 @@ curl.exe -X POST "http://localhost:8080/api/v1/valuations/estimate" -H "Content-
 Attendu : `currency` `XOF`, `comparablesCount` 7, médiane au m² 420 000, `medianTotal` 33 600 000, `rangeLow` / `rangeHigh` encadrant la médiane, `warning` nul. Avec `radiusMeters` 500, seuls 3 comparables restent : `comparablesCount` 3 et `warning` non nul (avertissement en portugais, **moins de 5 comparables**, estimation peu fiable). Avec `radiusMeters` 100 : `VALUATION_NO_COMPARABLES`.
 
 Interface : ouvrir `http://localhost:3000/pt/valuation` (lien « Avaliação » dans l'en-tête). Le formulaire affiche la fourchette en XOF, le badge de confiance et, quand l'échantillon compte moins de 5 comparables, l'avertissement visible ; la liste des comparables retenus suit le résultat.
+
+## Bloc 6 — Import CSV
+
+`POST /api/v1/imports` démarre un import de biens depuis un fichier CSV. Le traitement est asynchrone (Spring Batch) : la réponse est `202` avec `{ "jobId": "…", "status": "queued" }`, puis le statut se consulte par sondage.
+
+Les mutations suivent `app.imports.mutations-enabled` : `false` par défaut (`application.yml`). Tant qu'il est faux, `POST /api/v1/imports` répond 404 `NOT_FOUND`. Le profil `dev` le passe à `true` et fixe `app.imports.organisation-id` (`00000000-0000-0000-0000-00000000000a`) ; hors `dev`, `APP_IMPORTS_ORGANISATION_ID` est obligatoire sinon l'import répond 500 `INTERNAL_ERROR`. L'interface n'affiche le formulaire d'envoi que si `NEXT_PUBLIC_IMPORTS_MUTATIONS_ENABLED=true` (`frontend/.env.example`).
+
+Fichier : extension `.csv`, UTF-8 (BOM toléré), séparateur virgule, **5 Mo maximum** (`app.imports.max-file-size-bytes`, 5 242 880 octets). Trop volumineux : 400 `IMPORT_FILE_TOO_LARGE` ; fichier absent ou vide : `IMPORT_FILE_REQUIRED` ; mauvaise extension ou type MIME : `IMPORT_INVALID_TYPE`.
+
+En-tête exact, dans cet ordre (sinon 400 `IMPORT_INVALID_HEADER`) :
+
+```text
+reference,title,property_type,address_text,latitude,longitude
+```
+
+| Colonne | Règle |
+| --- | --- |
+| `reference` | obligatoire, 50 caractères max, unique parmi les biens actifs |
+| `title` | obligatoire, 500 caractères max |
+| `property_type` | obligatoire : `house`, `apartment`, `land` ou `commercial` |
+| `address_text` | facultatif |
+| `latitude` | obligatoire, décimal point, de -90 à 90 |
+| `longitude` | obligatoire, décimal point, de -180 à 180 |
+
+Chaque ligne valide crée, de façon atomique, un bien, sa géométrie (point, SRID 4326) et une source. Une ligne invalide n'arrête pas l'import : elle est consignée comme erreur de ligne (numéro, code, message en portugais, ligne brute) et comptée dans `errorRows`.
+
+**Doublon de `reference`** : une `reference` déjà présente sur un bien actif, ou répétée plus haut dans le même fichier, est rejetée avec le code `IMPORT_DUPLICATE_REFERENCE`. La première occurrence est importée, les suivantes sont des erreurs de ligne ; le bien existant n'est jamais modifié. Une course entre deux imports simultanés donne la même erreur de ligne, pas un échec du job.
+
+Avec le profil `dev` et le backend démarrés, depuis PowerShell (créer d'abord `biens.csv`) :
+
+```text
+@"
+reference,title,property_type,address_text,latitude,longitude
+IMP-001,Casa em Bissau,house,Bairro Militar,11.8637,-15.5977
+IMP-002,Terreno Antula,land,,11.8801,-15.5702
+IMP-003,Tipo invalido,castle,,11.86,-15.59
+IMP-001,Duplicado,house,,11.86,-15.59
+"@ | Set-Content -Encoding utf8 .\biens.csv
+curl.exe -F "file=@.\biens.csv;type=text/csv" "http://localhost:8080/api/v1/imports"
+curl.exe "http://localhost:8080/api/v1/imports/{jobId}/status"
+curl.exe "http://localhost:8080/api/v1/imports/{jobId}/report"
+curl.exe "http://localhost:8080/api/v1/imports?page=0&size=20"
+```
+
+Sondage : répéter `GET …/status` jusqu'à `completed` ou `failed` (`queued` → `processing` → `completed` | `failed`). Attendu pour l'exemple : `totalRows` 4, `successRows` 2, `errorRows` 2 ; `…/report` liste la ligne 3 (`IMPORT_INVALID_PROPERTY_TYPE`) et la ligne 4 (`IMPORT_DUPLICATE_REFERENCE`) ; les numéros comptent les lignes de données, l'en-tête exclu. Un `jobId` inconnu donne 404 `IMPORT_JOB_NOT_FOUND`. Un nouvel envoi du même fichier échoue entièrement en doublons (`successRows` 0).
+
+Interface : ouvrir `http://localhost:3000/pt/admin/imports` (chemin `/admin/imports` sous la locale). La page envoie le fichier, suit le statut par sondage, affiche les compteurs et le rapport d'erreurs par ligne (messages traduits), et liste les imports récents.

@@ -267,6 +267,42 @@ class PropertySpatialIT {
     }
 
     @Test
+    void pendingValidationHiddenFromListButDetailAvailable() throws Exception {
+        UUID pendingId = UUID.fromString("00000000-0000-0000-0001-0000000bed01");
+        UUID geomId = UUID.fromString("00000000-0000-0000-0002-0000000bed01");
+        jdbc.update(
+                """
+                INSERT INTO property (
+                  id, organisation_id, reference, title, property_type,
+                  confidence_score, confidence_level, confidence_summary, validation_status
+                ) VALUES (?, '00000000-0000-0000-0000-00000000000a', 'BIS-PEND', 'Pending',
+                          'house', 12, 'low', 'pending', 'pending_validation')
+                """,
+                pendingId);
+        jdbc.update(
+                """
+                INSERT INTO property_geometry (id, property_id, geom, geom_type, precision_level)
+                VALUES (?, ?, ST_SetSRID(ST_MakePoint(-15.60, 11.86), 4326), 'point', 'gps')
+                """,
+                geomId,
+                pendingId);
+        try {
+            JsonNode list = getProperties(DEFAULT_BBOX, null, null, 0, 100);
+            assertThat(list.get("data").get("totalElements").asInt()).isEqualTo(24);
+            list.get("data")
+                    .get("items")
+                    .forEach(n -> assertThat(n.get("reference").asText()).isNotEqualTo("BIS-PEND"));
+
+            ResponseEntity<String> detail =
+                    rest.getForEntity("/api/v1/properties/{id}", String.class, pendingId);
+            assertThat(detail.getStatusCode()).isEqualTo(HttpStatus.OK);
+        } finally {
+            jdbc.update("DELETE FROM property_geometry WHERE id = ?", geomId);
+            jdbc.update("DELETE FROM property WHERE id = ?", pendingId);
+        }
+    }
+
+    @Test
     void confidenceCheckRejectsIncoherentPair() {
         assertThatThrownBy(() -> jdbc.update(
                         """

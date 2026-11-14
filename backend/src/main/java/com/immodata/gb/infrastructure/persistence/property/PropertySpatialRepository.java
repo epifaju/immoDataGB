@@ -65,6 +65,7 @@ public class PropertySpatialRepository {
                 FROM property p
                 JOIN property_geometry g ON g.property_id = p.id
                 WHERE p.deleted_at IS NULL
+                  AND p.validation_status = 'validated'
                   AND g.geom && ST_MakeEnvelope(:w, :s, :e, :n, 4326)
                 """);
         if (query.type() != null) {

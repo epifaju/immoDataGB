@@ -1,7 +1,7 @@
 # Bloc 7 — Validation queue + audit (thin slice) — Design
 
 Date : 2026-11-14  
-Statut : en relecture  
+Statut : approuvé  
 Périmètre : preuve verticale mince (approche A) — file pending, validate/reject, `audit_event`, pages admin ; pas de dashboard ni AOP ni JWT  
 Dépend de : Cycle 0, Blocs 1–6.2
 

@@ -140,7 +140,7 @@ Ne pas modifier V7 ; uniquement via V11.
 - `address_text` : peut être vide → stocké `NULL`.
 - `latitude` / `longitude` : décimaux ; lat ∈ [-90, 90], lng ∈ [-180, 180].
 
-Header incorrect → job peut échouer globalement (`failed` + `error_message`) ou 400 au POST si détecté avant launch — **préférence : validation header au POST** → 400 `IMPORT_INVALID_HEADER` sans créer de job ; validation lignes dans le job.
+Header incorrect → **400 `IMPORT_INVALID_HEADER` au POST** sans créer de job ; validation des lignes uniquement dans le job.
 
 ## API
 

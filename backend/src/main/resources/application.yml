@@ -17,3 +17,7 @@ app:
     mutations-enabled: false
     bucket: documents
     signed-url-ttl: 15m
+  imports:
+    mutations-enabled: false
+    organisation-id: ${APP_IMPORTS_ORGANISATION_ID:}
+    max-file-size-bytes: 5242880

@@ -15,6 +15,9 @@ app:
     recalculation-enabled: true
   documents:
     mutations-enabled: true
+  imports:
+    mutations-enabled: true
+    organisation-id: 00000000-0000-0000-0000-00000000000a
   storage:
     endpoint: ${APP_STORAGE_ENDPOINT:http://127.0.0.1:9000}
     access-key: ${APP_STORAGE_ACCESS_KEY:minioadmin}

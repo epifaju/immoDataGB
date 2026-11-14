@@ -216,3 +216,22 @@ curl.exe "http://localhost:8080/api/v1/imports?page=0&size=20"
 Sondage : répéter `GET …/status` jusqu'à `completed` ou `failed` (`queued` → `processing` → `completed` | `failed`). Attendu pour l'exemple : `totalRows` 4, `successRows` 2, `errorRows` 2 ; `…/report` liste la ligne 3 (`IMPORT_INVALID_PROPERTY_TYPE`) et la ligne 4 (`IMPORT_DUPLICATE_REFERENCE`) ; les numéros comptent les lignes de données, l'en-tête exclu. Un `jobId` inconnu donne 404 `IMPORT_JOB_NOT_FOUND`. Un nouvel envoi du même fichier échoue entièrement en doublons (`successRows` 0).
 
 Interface : ouvrir `http://localhost:3000/pt/admin/imports` (chemin `/admin/imports` sous la locale). La page envoie le fichier, suit le statut par sondage, affiche les compteurs et le rapport d'erreurs par ligne (messages traduits), et liste les imports récents.
+
+## Bloc 6.2 — Observation terrain
+
+`POST /api/v1/field-observations` crée un bien en `pending_validation` (JSON, sans photos). Il n'apparaît **pas** sur la carte / liste spatiale tant qu'il n'est pas `validated` (validation admin = Bloc 7). La fiche `GET /api/v1/properties/{id}` reste lisible.
+
+Mutations : `app.field.mutations-enabled` (`false` par défaut, `true` en `dev`). POST avec drapeau off → 404 `NOT_FOUND`. Org : `app.field.organisation-id` (seed en `dev`). UI : `NEXT_PUBLIC_FIELD_MUTATIONS_ENABLED=true`.
+
+Corps JSON : `latitude`, `longitude`, `propertyType` (obligatoires) ; `title`, `occupationStatus` (`occupied`|`vacant`|`unknown`), `notes` (optionnels). Invalide : 400 `FIELD_REQUEST_INVALID`.
+
+Avec le profil `dev` et le backend démarrés :
+
+```text
+curl.exe -X POST "http://localhost:8080/api/v1/field-observations" -H "Content-Type: application/json" -d '{\"latitude\":11.863,\"longitude\":-15.598,\"propertyType\":\"house\",\"occupationStatus\":\"vacant\",\"notes\":\"Portao azul\"}'
+```
+
+Attendu : 201, `validationStatus` `pending_validation`, `reference` `FLD-…`, confiance 12/low. Le bien n'apparaît pas dans `GET /api/v1/properties?bbox=…` ; `GET /api/v1/properties/{id}` renvoie 200.
+
+Interface : `http://localhost:3000/pt/field/new` (lien « Terreno »). GPS via le navigateur ou saisie manuelle ; après succès, lien vers la fiche.
+

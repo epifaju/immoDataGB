@@ -5,6 +5,11 @@ spring:
     default: dev
   jackson:
     default-property-inclusion: always
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: never
   servlet:
     multipart:
       max-file-size: 50MB

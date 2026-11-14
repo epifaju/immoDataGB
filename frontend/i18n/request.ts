@@ -13,6 +13,7 @@ export default getRequestConfig(async ({requestLocale}) => {
   const property = (await import(`../messages/${locale}/property.json`)).default;
   const valuation = (await import(`../messages/${locale}/valuation.json`)).default;
   const field = (await import(`../messages/${locale}/field.json`)).default;
+  const admin = (await import(`../messages/${locale}/admin.json`)).default;
   return {
     locale,
     messages: {
@@ -23,6 +24,7 @@ export default getRequestConfig(async ({requestLocale}) => {
       property,
       valuation,
       field,
+      admin,
     },
   };
 });

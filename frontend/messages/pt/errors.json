@@ -25,5 +25,8 @@
   "IMPORT_INVALID_COORDINATE": "Coordenada inválida.",
   "IMPORT_DUPLICATE_REFERENCE": "Referência já existente.",
   "FIELD_REQUEST_INVALID": "Pedido de observação inválido.",
-  "FIELD_ORGANISATION_MISSING": "Organização de terreno não configurada."
+  "FIELD_ORGANISATION_MISSING": "Organização de terreno não configurada.",
+  "NOT_FOUND": "Recurso não encontrado.",
+  "PROPERTY_NOT_FOUND": "Bem não encontrado.",
+  "ADMIN_REQUEST_INVALID": "Pedido de administração inválido."
 }

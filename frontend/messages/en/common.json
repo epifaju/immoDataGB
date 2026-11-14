@@ -6,6 +6,8 @@
     "map": "Map",
     "valuation": "Valuation",
     "imports": "Imports",
+    "validationQueue": "Validation queue",
+    "audit": "Audit",
     "field": "Field"
   },
   "health": {

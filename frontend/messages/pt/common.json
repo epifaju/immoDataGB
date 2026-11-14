@@ -6,6 +6,8 @@
     "map": "Mapa",
     "valuation": "Avaliação",
     "imports": "Importações",
+    "validationQueue": "Fila de validação",
+    "audit": "Auditoria",
     "field": "Terreno"
   },
   "health": {

@@ -6,6 +6,8 @@
     "map": "Carte",
     "valuation": "Estimation",
     "imports": "Imports",
+    "validationQueue": "File de validation",
+    "audit": "Audit",
     "field": "Terrain"
   },
   "health": {

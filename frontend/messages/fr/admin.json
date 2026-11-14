@@ -1,0 +1,58 @@
+{
+  "queue": {
+    "title": "File de validation",
+    "intro": "Biens en attente de validation. Valider rend le bien visible ; rejeter le retire.",
+    "loading": "Chargement de la file…",
+    "empty": "Aucun bien en attente.",
+    "error": "Impossible de charger la file.",
+    "columns": {
+      "reference": "Référence",
+      "title": "Titre",
+      "type": "Type",
+      "createdAt": "Créé le",
+      "location": "Localisation",
+      "actions": "Actions"
+    },
+    "actions": {
+      "validate": "Valider",
+      "reject": "Rejeter",
+      "validated": "Bien validé.",
+      "rejected": "Bien rejeté.",
+      "unavailable": "La validation n'est pas disponible dans cet environnement."
+    },
+    "range": "{from}–{to} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "audit": {
+    "title": "Audit",
+    "intro": "Journal des validations et des rejets.",
+    "loading": "Chargement de l'audit…",
+    "empty": "Aucun événement.",
+    "error": "Impossible de charger l'audit.",
+    "filters": {
+      "entityType": "Type d'entité",
+      "action": "Action",
+      "from": "Depuis",
+      "to": "Jusqu'à",
+      "all": "Tous",
+      "property": "Bien",
+      "apply": "Filtrer",
+      "hint": "Utilisez un instant ISO-8601, par exemple 2026-11-01T00:00:00Z."
+    },
+    "actions": {
+      "validate": "Validation",
+      "reject": "Rejet"
+    },
+    "columns": {
+      "createdAt": "Date",
+      "action": "Action",
+      "entityType": "Entité",
+      "entityId": "Identifiant",
+      "summary": "Résumé"
+    },
+    "range": "{from}–{to} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant"
+  }
+}

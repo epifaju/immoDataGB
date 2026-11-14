@@ -25,5 +25,8 @@
   "IMPORT_INVALID_COORDINATE": "Coordonnée invalide.",
   "IMPORT_DUPLICATE_REFERENCE": "Référence déjà existante.",
   "FIELD_REQUEST_INVALID": "Demande d'observation invalide.",
-  "FIELD_ORGANISATION_MISSING": "Organisation terrain non configurée."
+  "FIELD_ORGANISATION_MISSING": "Organisation terrain non configurée.",
+  "NOT_FOUND": "Ressource introuvable.",
+  "PROPERTY_NOT_FOUND": "Bien introuvable.",
+  "ADMIN_REQUEST_INVALID": "Demande d'administration invalide."
 }

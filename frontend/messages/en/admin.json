@@ -1,0 +1,58 @@
+{
+  "queue": {
+    "title": "Validation queue",
+    "intro": "Properties waiting for validation. Validating makes a property visible; rejecting removes it.",
+    "loading": "Loading the queue…",
+    "empty": "No pending properties.",
+    "error": "The queue could not be loaded.",
+    "columns": {
+      "reference": "Reference",
+      "title": "Title",
+      "type": "Type",
+      "createdAt": "Created",
+      "location": "Location",
+      "actions": "Actions"
+    },
+    "actions": {
+      "validate": "Validate",
+      "reject": "Reject",
+      "validated": "Property validated.",
+      "rejected": "Property rejected.",
+      "unavailable": "Validation is not available in this environment."
+    },
+    "range": "{from}–{to} of {total}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "audit": {
+    "title": "Audit",
+    "intro": "Record of validations and rejections.",
+    "loading": "Loading the audit log…",
+    "empty": "No events.",
+    "error": "The audit log could not be loaded.",
+    "filters": {
+      "entityType": "Entity type",
+      "action": "Action",
+      "from": "From",
+      "to": "To",
+      "all": "All",
+      "property": "Property",
+      "apply": "Filter",
+      "hint": "Use an ISO-8601 instant, for example 2026-11-01T00:00:00Z."
+    },
+    "actions": {
+      "validate": "Validation",
+      "reject": "Rejection"
+    },
+    "columns": {
+      "createdAt": "Date",
+      "action": "Action",
+      "entityType": "Entity",
+      "entityId": "Identifier",
+      "summary": "Summary"
+    },
+    "range": "{from}–{to} of {total}",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

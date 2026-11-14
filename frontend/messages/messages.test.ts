@@ -20,6 +20,9 @@ import ptValuation from './pt/valuation.json';
 import enField from './en/field.json';
 import frField from './fr/field.json';
 import ptField from './pt/field.json';
+import enAdmin from './en/admin.json';
+import frAdmin from './fr/admin.json';
+import ptAdmin from './pt/admin.json';
 
 function leafKeys(value: unknown, prefix = ''): string[] {
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
@@ -112,4 +115,29 @@ test('field error codes and nav label exist in every locale', () => {
   expect(ptCommon.nav.field).toBe('Terreno');
   expect(frCommon.nav.field).toBe('Terrain');
   expect(enCommon.nav.field).toBe('Field');
+});
+
+test('admin locales share the same keys', () => {
+  expect(leafKeys(frAdmin).sort()).toEqual(leafKeys(ptAdmin).sort());
+  expect(leafKeys(enAdmin).sort()).toEqual(leafKeys(ptAdmin).sort());
+});
+
+test('admin error codes and nav labels exist in every locale', () => {
+  for (const errors of [ptErrors, frErrors, enErrors]) {
+    expect(errors).toHaveProperty('NOT_FOUND');
+    expect(errors).toHaveProperty('PROPERTY_NOT_FOUND');
+    expect(errors).toHaveProperty('ADMIN_REQUEST_INVALID');
+  }
+  expect(ptCommon.nav.validationQueue).toBe('Fila de validação');
+  expect(frCommon.nav.validationQueue).toBe('File de validation');
+  expect(enCommon.nav.validationQueue).toBe('Validation queue');
+  expect(ptCommon.nav.audit).toBe('Auditoria');
+  expect(frCommon.nav.audit).toBe('Audit');
+  expect(enCommon.nav.audit).toBe('Audit');
+  expect(ptAdmin.queue.title).toBe('Fila de validação');
+  expect(frAdmin.queue.title).toBe('File de validation');
+  expect(enAdmin.queue.title).toBe('Validation queue');
+  expect(ptAdmin.audit.title).toBe('Auditoria');
+  expect(frAdmin.audit.title).toBe('Audit');
+  expect(enAdmin.audit.title).toBe('Audit');
 });

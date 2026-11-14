@@ -25,5 +25,8 @@
   "IMPORT_INVALID_COORDINATE": "Invalid coordinate.",
   "IMPORT_DUPLICATE_REFERENCE": "Reference already exists.",
   "FIELD_REQUEST_INVALID": "Invalid field observation request.",
-  "FIELD_ORGANISATION_MISSING": "Field organisation is not configured."
+  "FIELD_ORGANISATION_MISSING": "Field organisation is not configured.",
+  "NOT_FOUND": "Resource not found.",
+  "PROPERTY_NOT_FOUND": "Property not found.",
+  "ADMIN_REQUEST_INVALID": "Invalid administration request."
 }

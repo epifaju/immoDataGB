@@ -1,0 +1,58 @@
+{
+  "queue": {
+    "title": "Fila de validação",
+    "intro": "Bens à espera de validação. Validar torna o bem visível; rejeitar remove-o.",
+    "loading": "A carregar a fila…",
+    "empty": "Nenhum bem pendente.",
+    "error": "Não foi possível carregar a fila.",
+    "columns": {
+      "reference": "Referência",
+      "title": "Título",
+      "type": "Tipo",
+      "createdAt": "Criado em",
+      "location": "Localização",
+      "actions": "Ações"
+    },
+    "actions": {
+      "validate": "Validar",
+      "reject": "Rejeitar",
+      "validated": "Bem validado.",
+      "rejected": "Bem rejeitado.",
+      "unavailable": "A validação não está disponível neste ambiente."
+    },
+    "range": "{from}–{to} de {total}",
+    "previous": "Anterior",
+    "next": "Seguinte"
+  },
+  "audit": {
+    "title": "Auditoria",
+    "intro": "Registo das validações e rejeições.",
+    "loading": "A carregar a auditoria…",
+    "empty": "Nenhum evento.",
+    "error": "Não foi possível carregar a auditoria.",
+    "filters": {
+      "entityType": "Tipo de entidade",
+      "action": "Ação",
+      "from": "Desde",
+      "to": "Até",
+      "all": "Todos",
+      "property": "Bem",
+      "apply": "Filtrar",
+      "hint": "Use um instante ISO-8601, por exemplo 2026-11-01T00:00:00Z."
+    },
+    "actions": {
+      "validate": "Validação",
+      "reject": "Rejeição"
+    },
+    "columns": {
+      "createdAt": "Data",
+      "action": "Ação",
+      "entityType": "Entidade",
+      "entityId": "Identificador",
+      "summary": "Resumo"
+    },
+    "range": "{from}–{to} de {total}",
+    "previous": "Anterior",
+    "next": "Seguinte"
+  }
+}

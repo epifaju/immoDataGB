@@ -32,11 +32,13 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <header className="flex items-center gap-4 p-4">
+            <header className="flex flex-wrap items-center gap-4 p-4">
               <p>{t('appName')}</p>
               <Link href="/map">{t('nav.map')}</Link>
               <Link href="/valuation">{t('nav.valuation')}</Link>
               <Link href="/admin/imports">{t('nav.imports')}</Link>
+              <Link href="/admin/validation-queue">{t('nav.validationQueue')}</Link>
+              <Link href="/admin/audit">{t('nav.audit')}</Link>
               <Link href="/field/new">{t('nav.field')}</Link>
               <Suspense fallback={null}>
                 <LocaleSwitcher />

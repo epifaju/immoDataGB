@@ -255,3 +255,63 @@ export type FieldObservationResponse = {
   status: number;
   body: ApiResponse<FieldObservationCreated | null>;
 };
+
+export type ValidationQueueItem = {
+  id: string;
+  reference: string;
+  title: string | null;
+  propertyType: string;
+  createdAt: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type AuditEventView = {
+  id: string;
+  entityType: string;
+  entityId: string;
+  action: string;
+  oldValue: string | null;
+  newValue: string | null;
+  summary: string | null;
+  createdAt: string;
+};
+
+export type RejectResult = {
+  id: string;
+  deleted: boolean;
+};
+
+export type ValidationQueueQuery = {
+  page: number;
+  size: number;
+};
+
+export type AuditQuery = {
+  entityType?: string;
+  action?: string;
+  from?: string;
+  to?: string;
+  page: number;
+  size: number;
+};
+
+export type ValidationQueueResult = {
+  status: number;
+  body: ApiResponse<PageResponse<ValidationQueueItem> | null>;
+};
+
+export type ValidatePropertyResult = {
+  status: number;
+  body: ApiResponse<ValidationQueueItem | null>;
+};
+
+export type RejectPropertyResult = {
+  status: number;
+  body: ApiResponse<RejectResult | null>;
+};
+
+export type AuditListResult = {
+  status: number;
+  body: ApiResponse<PageResponse<AuditEventView> | null>;
+};

@@ -36,6 +36,7 @@ export default async function LocaleLayout({
               <p>{t('appName')}</p>
               <Link href="/map">{t('nav.map')}</Link>
               <Link href="/valuation">{t('nav.valuation')}</Link>
+              <Link href="/admin/imports">{t('nav.imports')}</Link>
               <Suspense fallback={null}>
                 <LocaleSwitcher />
               </Suspense>

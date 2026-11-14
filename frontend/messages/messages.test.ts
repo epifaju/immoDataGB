@@ -11,6 +11,9 @@ import ptMap from './pt/map.json';
 import enProperty from './en/property.json';
 import frProperty from './fr/property.json';
 import ptProperty from './pt/property.json';
+import enImports from './en/imports.json';
+import frImports from './fr/imports.json';
+import ptImports from './pt/imports.json';
 import enValuation from './en/valuation.json';
 import frValuation from './fr/valuation.json';
 import ptValuation from './pt/valuation.json';
@@ -65,4 +68,30 @@ test('valuation error codes and nav label exist in every locale', () => {
 test('property locales share the same keys', () => {
   expect(leafKeys(frProperty).sort()).toEqual(leafKeys(ptProperty).sort());
   expect(leafKeys(enProperty).sort()).toEqual(leafKeys(ptProperty).sort());
+});
+
+test('imports locales share the same keys', () => {
+  expect(leafKeys(frImports).sort()).toEqual(leafKeys(ptImports).sort());
+  expect(leafKeys(enImports).sort()).toEqual(leafKeys(ptImports).sort());
+});
+
+test('import error codes and nav label exist in every locale', () => {
+  for (const errors of [ptErrors, frErrors, enErrors]) {
+    expect(Object.keys(errors).filter((key) => key.startsWith('IMPORT_')).sort()).toEqual([
+      'IMPORT_DUPLICATE_REFERENCE',
+      'IMPORT_FILE_REQUIRED',
+      'IMPORT_FILE_TOO_LARGE',
+      'IMPORT_INVALID_COORDINATE',
+      'IMPORT_INVALID_HEADER',
+      'IMPORT_INVALID_PROPERTY_TYPE',
+      'IMPORT_INVALID_TYPE',
+      'IMPORT_JOB_ID_INVALID',
+      'IMPORT_JOB_NOT_FOUND',
+      'IMPORT_MISSING_FIELD',
+      'IMPORT_PAGE_INVALID',
+    ]);
+  }
+  expect(ptCommon.nav.imports).toBe('Importações');
+  expect(frCommon.nav.imports).toBe('Imports');
+  expect(enCommon.nav.imports).toBe('Imports');
 });

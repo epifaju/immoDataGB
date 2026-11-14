@@ -4,7 +4,8 @@
   "error": "The API could not be reached.",
   "nav": {
     "map": "Map",
-    "valuation": "Valuation"
+    "valuation": "Valuation",
+    "imports": "Imports"
   },
   "health": {
     "title": "Platform status",

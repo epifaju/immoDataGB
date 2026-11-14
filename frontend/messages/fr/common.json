@@ -4,7 +4,8 @@
   "error": "Impossible de joindre l'API.",
   "nav": {
     "map": "Carte",
-    "valuation": "Estimation"
+    "valuation": "Estimation",
+    "imports": "Imports"
   },
   "health": {
     "title": "État de la plateforme",

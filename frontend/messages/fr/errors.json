@@ -12,5 +12,16 @@
   "DOCUMENT_FILE_TYPE_REJECTED": "Type de fichier non autorisé.",
   "DOCUMENT_STORAGE_UNAVAILABLE": "Le stockage des documents est indisponible.",
   "VALUATION_REQUEST_INVALID": "Demande d'estimation invalide.",
-  "VALUATION_NO_COMPARABLES": "Aucun comparable trouvé pour ces critères."
+  "VALUATION_NO_COMPARABLES": "Aucun comparable trouvé pour ces critères.",
+  "IMPORT_FILE_REQUIRED": "Fichier manquant.",
+  "IMPORT_FILE_TOO_LARGE": "Le fichier dépasse la limite de 5 Mo.",
+  "IMPORT_INVALID_TYPE": "Le fichier doit être un CSV.",
+  "IMPORT_INVALID_HEADER": "En-tête CSV invalide.",
+  "IMPORT_JOB_NOT_FOUND": "Import introuvable.",
+  "IMPORT_JOB_ID_INVALID": "Identifiant d'import invalide.",
+  "IMPORT_PAGE_INVALID": "Page invalide.",
+  "IMPORT_MISSING_FIELD": "Champ obligatoire manquant ou invalide.",
+  "IMPORT_INVALID_PROPERTY_TYPE": "Type de bien invalide.",
+  "IMPORT_INVALID_COORDINATE": "Coordonnée invalide.",
+  "IMPORT_DUPLICATE_REFERENCE": "Référence déjà existante."
 }

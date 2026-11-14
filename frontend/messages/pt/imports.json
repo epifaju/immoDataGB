@@ -1,0 +1,41 @@
+{
+  "title": "Importações",
+  "intro": "Importe bens a partir de um ficheiro CSV e acompanhe o resultado.",
+  "upload": {
+    "title": "Importar CSV",
+    "hint": "Colunas: reference, title, property_type, address_text, latitude, longitude. Máximo 5 MB.",
+    "file": "Ficheiro CSV",
+    "submit": "Importar",
+    "submitting": "A enviar…",
+    "fileRequired": "Selecione um ficheiro.",
+    "unavailable": "A importação não está disponível neste ambiente."
+  },
+  "status": {
+    "queued": "Em fila",
+    "processing": "Em processamento",
+    "completed": "Concluída",
+    "failed": "Falhada"
+  },
+  "job": {
+    "title": "Estado da importação",
+    "loading": "A carregar a importação…",
+    "polling": "A importação está em curso…",
+    "file": "Ficheiro",
+    "status": "Estado",
+    "total": "Linhas",
+    "success": "Importadas",
+    "errors": "Erros",
+    "failed": "A importação falhou."
+  },
+  "report": {
+    "title": "Relatório de erros",
+    "empty": "Nenhum erro de linha.",
+    "row": "Linha",
+    "error": "Erro",
+    "excerpt": "Excerto"
+  },
+  "recent": {
+    "title": "Importações recentes",
+    "open": "Ver"
+  }
+}

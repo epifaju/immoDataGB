@@ -1,0 +1,41 @@
+{
+  "title": "Imports",
+  "intro": "Import properties from a CSV file and follow the result.",
+  "upload": {
+    "title": "Import CSV",
+    "hint": "Columns: reference, title, property_type, address_text, latitude, longitude. Maximum 5 MB.",
+    "file": "CSV file",
+    "submit": "Import",
+    "submitting": "Uploading…",
+    "fileRequired": "Select a file.",
+    "unavailable": "Import is not available in this environment."
+  },
+  "status": {
+    "queued": "Queued",
+    "processing": "Processing",
+    "completed": "Completed",
+    "failed": "Failed"
+  },
+  "job": {
+    "title": "Import status",
+    "loading": "Loading import…",
+    "polling": "The import is running…",
+    "file": "File",
+    "status": "Status",
+    "total": "Rows",
+    "success": "Imported",
+    "errors": "Errors",
+    "failed": "The import failed."
+  },
+  "report": {
+    "title": "Error report",
+    "empty": "No row errors.",
+    "row": "Row",
+    "error": "Error",
+    "excerpt": "Excerpt"
+  },
+  "recent": {
+    "title": "Recent imports",
+    "open": "View"
+  }
+}

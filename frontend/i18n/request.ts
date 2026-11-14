@@ -8,6 +8,7 @@ export default getRequestConfig(async ({requestLocale}) => {
   }
   const common = (await import(`../messages/${locale}/common.json`)).default;
   const errors = (await import(`../messages/${locale}/errors.json`)).default;
+  const imports = (await import(`../messages/${locale}/imports.json`)).default;
   const map = (await import(`../messages/${locale}/map.json`)).default;
   const property = (await import(`../messages/${locale}/property.json`)).default;
   const valuation = (await import(`../messages/${locale}/valuation.json`)).default;
@@ -16,6 +17,7 @@ export default getRequestConfig(async ({requestLocale}) => {
     messages: {
       common,
       errors,
+      imports,
       map,
       property,
       valuation,

@@ -176,3 +176,54 @@ export type EstimateResponse = {
   status: number;
   body: ApiResponse<EstimateResult | null>;
 };
+
+export const IMPORT_JOB_STATUSES = ['queued', 'processing', 'completed', 'failed'] as const;
+
+export type ImportJobState = (typeof IMPORT_JOB_STATUSES)[number];
+
+export type ImportStartResult = {
+  jobId: string;
+  status: ImportJobState;
+};
+
+export type ImportJobStatus = {
+  jobId: string;
+  status: ImportJobState;
+  originalFilename: string;
+  totalRows: number;
+  successRows: number;
+  errorRows: number;
+  errorMessage: string | null;
+  createdAt: string;
+};
+
+export type ImportRowError = {
+  rowNumber: number;
+  code: string;
+  message: string;
+  rawExcerpt: string | null;
+};
+
+export type ImportReport = ImportJobStatus & {
+  errors: ImportRowError[];
+};
+
+export type ImportStartResponse = {
+  status: number;
+  body: ApiResponse<ImportStartResult | null>;
+};
+
+export type ImportStatusResponse = {
+  status: number;
+  body: ApiResponse<ImportJobStatus | null>;
+};
+
+export type ImportReportResponse = {
+  status: number;
+  body: ApiResponse<ImportReport | null>;
+};
+
+export type ImportListResponse = {
+  status: number;
+  body: ApiResponse<PageResponse<ImportJobStatus> | null>;
+};

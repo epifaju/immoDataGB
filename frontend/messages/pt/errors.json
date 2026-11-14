@@ -12,5 +12,16 @@
   "DOCUMENT_FILE_TYPE_REJECTED": "Tipo de ficheiro não permitido.",
   "DOCUMENT_STORAGE_UNAVAILABLE": "O armazenamento de documentos está indisponível.",
   "VALUATION_REQUEST_INVALID": "Pedido de avaliação inválido.",
-  "VALUATION_NO_COMPARABLES": "Nenhum comparável encontrado para estes critérios."
+  "VALUATION_NO_COMPARABLES": "Nenhum comparável encontrado para estes critérios.",
+  "IMPORT_FILE_REQUIRED": "Ficheiro em falta.",
+  "IMPORT_FILE_TOO_LARGE": "O ficheiro excede o limite de 5 MB.",
+  "IMPORT_INVALID_TYPE": "O ficheiro deve ser um CSV.",
+  "IMPORT_INVALID_HEADER": "Cabeçalho CSV inválido.",
+  "IMPORT_JOB_NOT_FOUND": "Importação não encontrada.",
+  "IMPORT_JOB_ID_INVALID": "Identificador de importação inválido.",
+  "IMPORT_PAGE_INVALID": "Página inválida.",
+  "IMPORT_MISSING_FIELD": "Campo obrigatório em falta ou inválido.",
+  "IMPORT_INVALID_PROPERTY_TYPE": "Tipo de bem inválido.",
+  "IMPORT_INVALID_COORDINATE": "Coordenada inválida.",
+  "IMPORT_DUPLICATE_REFERENCE": "Referência já existente."
 }

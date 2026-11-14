@@ -4,7 +4,8 @@
   "error": "Não foi possível contactar a API.",
   "nav": {
     "map": "Mapa",
-    "valuation": "Avaliação"
+    "valuation": "Avaliação",
+    "imports": "Importações"
   },
   "health": {
     "title": "Estado da plataforma",

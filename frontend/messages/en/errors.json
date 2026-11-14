@@ -12,5 +12,16 @@
   "DOCUMENT_FILE_TYPE_REJECTED": "File type not allowed.",
   "DOCUMENT_STORAGE_UNAVAILABLE": "Document storage is unavailable.",
   "VALUATION_REQUEST_INVALID": "Invalid valuation request.",
-  "VALUATION_NO_COMPARABLES": "No comparables found for these criteria."
+  "VALUATION_NO_COMPARABLES": "No comparables found for these criteria.",
+  "IMPORT_FILE_REQUIRED": "File is missing.",
+  "IMPORT_FILE_TOO_LARGE": "The file exceeds the 5 MB limit.",
+  "IMPORT_INVALID_TYPE": "The file must be a CSV.",
+  "IMPORT_INVALID_HEADER": "Invalid CSV header.",
+  "IMPORT_JOB_NOT_FOUND": "Import not found.",
+  "IMPORT_JOB_ID_INVALID": "Invalid import identifier.",
+  "IMPORT_PAGE_INVALID": "Invalid page.",
+  "IMPORT_MISSING_FIELD": "Required field is missing or invalid.",
+  "IMPORT_INVALID_PROPERTY_TYPE": "Invalid property type.",
+  "IMPORT_INVALID_COORDINATE": "Invalid coordinate.",
+  "IMPORT_DUPLICATE_REFERENCE": "Reference already exists."
 }

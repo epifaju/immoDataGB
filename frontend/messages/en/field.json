@@ -1,0 +1,29 @@
+{
+  "title": "Field observation",
+  "intro": "Record an observation with GPS. It stays pending validation and does not appear on the map until approved.",
+  "form": {
+    "propertyType": "Property type",
+    "title": "Title (optional)",
+    "occupationStatus": "Occupation",
+    "occupationNone": "—",
+    "occupied": "Occupied",
+    "vacant": "Vacant",
+    "unknown": "Unknown",
+    "notes": "Notes (optional)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "useLocation": "Use my location",
+    "locating": "Getting location…",
+    "geoDenied": "Could not get location. Enter coordinates manually.",
+    "submit": "Submit observation",
+    "submitting": "Submitting…",
+    "unavailable": "Field observation creation is disabled in this environment.",
+    "required": "Required or invalid field."
+  },
+  "success": {
+    "title": "Observation created",
+    "reference": "Reference",
+    "pending": "Status: pending validation (not shown on the map).",
+    "openDetail": "Open detail"
+  }
+}

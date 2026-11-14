@@ -227,3 +227,30 @@ export type ImportListResponse = {
   status: number;
   body: ApiResponse<PageResponse<ImportJobStatus> | null>;
 };
+export type OccupationStatus = 'occupied' | 'vacant' | 'unknown';
+
+export type FieldObservationRequest = {
+  latitude: number;
+  longitude: number;
+  propertyType: ValuationPropertyType;
+  title?: string;
+  occupationStatus?: OccupationStatus;
+  notes?: string;
+};
+
+export type FieldObservationCreated = {
+  id: string;
+  reference: string;
+  title: string;
+  propertyType: ValuationPropertyType;
+  validationStatus: 'pending_validation' | 'validated';
+  latitude: number;
+  longitude: number;
+  confidenceScore: number;
+  confidenceLevel: string;
+};
+
+export type FieldObservationResponse = {
+  status: number;
+  body: ApiResponse<FieldObservationCreated | null>;
+};

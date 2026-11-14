@@ -1,0 +1,29 @@
+{
+  "title": "Observation terrain",
+  "intro": "Enregistrez une observation avec GPS. Elle reste en attente de validation et n'apparaît pas sur la carte tant qu'elle n'est pas approuvée.",
+  "form": {
+    "propertyType": "Type de bien",
+    "title": "Titre (optionnel)",
+    "occupationStatus": "Occupation",
+    "occupationNone": "—",
+    "occupied": "Occupé",
+    "vacant": "Vacant",
+    "unknown": "Inconnu",
+    "notes": "Notes (optionnel)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "useLocation": "Utiliser ma position",
+    "locating": "Obtention de la position…",
+    "geoDenied": "Impossible d'obtenir la position. Saisissez les coordonnées manuellement.",
+    "submit": "Envoyer l'observation",
+    "submitting": "Envoi…",
+    "unavailable": "La création d'observations est désactivée dans cet environnement.",
+    "required": "Champ obligatoire ou invalide."
+  },
+  "success": {
+    "title": "Observation créée",
+    "reference": "Référence",
+    "pending": "Statut : en attente de validation (invisible sur la carte).",
+    "openDetail": "Ouvrir la fiche"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "title": "Observação de terreno",
+  "intro": "Registe uma observação com GPS. Fica pendente de validação e não aparece no mapa até ser aprovada.",
+  "form": {
+    "propertyType": "Tipo de imóvel",
+    "title": "Título (opcional)",
+    "occupationStatus": "Ocupação",
+    "occupationNone": "—",
+    "occupied": "Ocupado",
+    "vacant": "Vago",
+    "unknown": "Desconhecido",
+    "notes": "Notas (opcional)",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "useLocation": "Usar a minha posição",
+    "locating": "A obter posição…",
+    "geoDenied": "Não foi possível obter a posição. Introduza as coordenadas manualmente.",
+    "submit": "Enviar observação",
+    "submitting": "A enviar…",
+    "unavailable": "A criação de observações está desativada neste ambiente.",
+    "required": "Campo obrigatório ou inválido."
+  },
+  "success": {
+    "title": "Observação criada",
+    "reference": "Referência",
+    "pending": "Estado: pendente de validação (não aparece no mapa).",
+    "openDetail": "Abrir ficha"
+  }
+}

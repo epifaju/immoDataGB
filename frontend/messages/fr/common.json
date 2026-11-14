@@ -5,7 +5,8 @@
   "nav": {
     "map": "Carte",
     "valuation": "Estimation",
-    "imports": "Imports"
+    "imports": "Imports",
+    "field": "Terrain"
   },
   "health": {
     "title": "État de la plateforme",

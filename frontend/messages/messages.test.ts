@@ -17,6 +17,9 @@ import ptImports from './pt/imports.json';
 import enValuation from './en/valuation.json';
 import frValuation from './fr/valuation.json';
 import ptValuation from './pt/valuation.json';
+import enField from './en/field.json';
+import frField from './fr/field.json';
+import ptField from './pt/field.json';
 
 function leafKeys(value: unknown, prefix = ''): string[] {
   if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
@@ -94,4 +97,19 @@ test('import error codes and nav label exist in every locale', () => {
   expect(ptCommon.nav.imports).toBe('Importações');
   expect(frCommon.nav.imports).toBe('Imports');
   expect(enCommon.nav.imports).toBe('Imports');
+});
+
+test('field locales share the same keys', () => {
+  expect(leafKeys(frField).sort()).toEqual(leafKeys(ptField).sort());
+  expect(leafKeys(enField).sort()).toEqual(leafKeys(ptField).sort());
+});
+
+test('field error codes and nav label exist in every locale', () => {
+  for (const errors of [ptErrors, frErrors, enErrors]) {
+    expect(errors).toHaveProperty('FIELD_REQUEST_INVALID');
+    expect(errors).toHaveProperty('FIELD_ORGANISATION_MISSING');
+  }
+  expect(ptCommon.nav.field).toBe('Terreno');
+  expect(frCommon.nav.field).toBe('Terrain');
+  expect(enCommon.nav.field).toBe('Field');
 });

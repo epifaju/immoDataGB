@@ -1,0 +1,4 @@
+reference,title,property_type,address_text,latitude,longitude
+IMP-IT-001,Apartamento importado IT,apartment,Avenida Amilcar Cabral Bissau,11.8636,-15.5977
+IMP-IT-002,Castelo invalido,castle,Bairro Ajuda Bissau,11.8650,-15.5990
+BIS-001,Duplicado do seed,house,Ajuda Bissau,11.8640,-15.5980

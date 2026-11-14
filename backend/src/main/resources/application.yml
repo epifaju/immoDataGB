@@ -26,3 +26,6 @@ app:
     mutations-enabled: false
     organisation-id: ${APP_IMPORTS_ORGANISATION_ID:}
     max-file-size-bytes: 5242880
+  field:
+    mutations-enabled: false
+    organisation-id: ${APP_FIELD_ORGANISATION_ID:}

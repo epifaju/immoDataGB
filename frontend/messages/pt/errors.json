@@ -20,10 +20,10 @@
   "IMPORT_JOB_NOT_FOUND": "Importação não encontrada.",
   "IMPORT_JOB_ID_INVALID": "Identificador de importação inválido.",
   "IMPORT_PAGE_INVALID": "Página inválida.",
-  "FIELD_REQUEST_INVALID": "Pedido de observação inválido.",
-  "FIELD_ORGANISATION_MISSING": "Organização de terreno não configurada.",
   "IMPORT_MISSING_FIELD": "Campo obrigatório em falta ou inválido.",
   "IMPORT_INVALID_PROPERTY_TYPE": "Tipo de bem inválido.",
   "IMPORT_INVALID_COORDINATE": "Coordenada inválida.",
-  "IMPORT_DUPLICATE_REFERENCE": "Referência já existente."
+  "IMPORT_DUPLICATE_REFERENCE": "Referência já existente.",
+  "FIELD_REQUEST_INVALID": "Pedido de observação inválido.",
+  "FIELD_ORGANISATION_MISSING": "Organização de terreno não configurada."
 }

@@ -227,6 +227,7 @@ export type ImportListResponse = {
   status: number;
   body: ApiResponse<PageResponse<ImportJobStatus> | null>;
 };
+
 export type OccupationStatus = 'occupied' | 'vacant' | 'unknown';
 
 export type FieldObservationRequest = {

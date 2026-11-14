@@ -20,8 +20,6 @@
   "IMPORT_JOB_NOT_FOUND": "Import not found.",
   "IMPORT_JOB_ID_INVALID": "Invalid import identifier.",
   "IMPORT_PAGE_INVALID": "Invalid page.",
-  "FIELD_REQUEST_INVALID": "Invalid field observation request.",
-  "FIELD_ORGANISATION_MISSING": "Field organisation is not configured.",
   "IMPORT_MISSING_FIELD": "Required field is missing or invalid.",
   "IMPORT_INVALID_PROPERTY_TYPE": "Invalid property type.",
   "IMPORT_INVALID_COORDINATE": "Invalid coordinate.",

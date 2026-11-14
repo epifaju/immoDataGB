@@ -20,8 +20,6 @@
   "IMPORT_JOB_NOT_FOUND": "Import introuvable.",
   "IMPORT_JOB_ID_INVALID": "Identifiant d'import invalide.",
   "IMPORT_PAGE_INVALID": "Page invalide.",
-  "FIELD_REQUEST_INVALID": "Demande d'observation invalide.",
-  "FIELD_ORGANISATION_MISSING": "Organisation terrain non configurée.",
   "IMPORT_MISSING_FIELD": "Champ obligatoire manquant ou invalide.",
   "IMPORT_INVALID_PROPERTY_TYPE": "Type de bien invalide.",
   "IMPORT_INVALID_COORDINATE": "Coordonnée invalide.",

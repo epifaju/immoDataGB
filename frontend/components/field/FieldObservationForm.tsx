@@ -16,7 +16,6 @@ import {PROPERTY_TYPES} from '@/lib/map/constants';
 const FIELD_ERROR_CODES = [
   'FIELD_REQUEST_INVALID',
   'FIELD_ORGANISATION_MISSING',
-  'NOT_FOUND',
   'HEALTH_DATABASE_UNAVAILABLE',
   'INTERNAL_ERROR',
 ] as const;
@@ -116,6 +115,10 @@ export function FieldObservationForm() {
         return;
       }
       const code = response.body.message ?? 'INTERNAL_ERROR';
+      if (code === 'NOT_FOUND') {
+        setApiError(t('form.unavailable'));
+        return;
+      }
       setApiError(
         (FIELD_ERROR_CODES as readonly string[]).includes(code)
           ? tErrors(code as (typeof FIELD_ERROR_CODES)[number])

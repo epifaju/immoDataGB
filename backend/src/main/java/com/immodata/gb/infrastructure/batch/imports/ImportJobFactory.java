@@ -67,6 +67,8 @@ public class ImportJobFactory {
                 .resource(new FileSystemResource(file))
                 .encoding(StandardCharsets.UTF_8.name())
                 .linesToSkip(1)
+                // Par défaut Spring Batch ignore les lignes commençant par '#' : ne jamais perdre de ligne de données.
+                .comments(new String[0])
                 .saveState(false)
                 .lineMapper((line, lineNumber) -> {
                     String[] cols;

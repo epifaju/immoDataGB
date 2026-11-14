@@ -87,6 +87,28 @@ class ImportJobFactoryTest {
     }
 
     @Test
+    void hashPrefixedDataRowIsProcessedAndCountedNotTreatedAsComment() throws Exception {
+        UUID jobId = UUID.randomUUID();
+        Path file = csv("""
+                OK-1,Casa,house,,11.85,-15.59
+                #HASH-1,Casa cerca,house,,11.85,-15.59
+                OK-2,Outra,land,,11.86,-15.60
+                """);
+
+        JobExecution execution = run(jobId, file);
+
+        assertThat(execution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
+        ArgumentCaptor<ImportCsvRow> rows = ArgumentCaptor.forClass(ImportCsvRow.class);
+        verify(repository, org.mockito.Mockito.atLeastOnce()).insertPropertyBundle(eq(ORG), rows.capture());
+        // La ligne 2 (#HASH-1) doit être soit importée, soit signalée en erreur, jamais ignorée.
+        boolean imported = rows.getAllValues().stream().anyMatch(r -> r.rowNumber() == 2);
+        if (!imported) {
+            verify(repository).insertRowError(eq(jobId), eq(2), anyString(), anyString(), anyString());
+        }
+        verify(repository).markFinished(eq(jobId), eq("completed"), eq(3), any(Integer.class), any(Integer.class), isNull());
+    }
+
+    @Test
     void duplicateReferenceWithinSameFileIsRejected() throws Exception {
         UUID jobId = UUID.randomUUID();
         Path file = csv("""

@@ -83,6 +83,23 @@ public class AdminValidationRepository {
                 .optional();
     }
 
+    public Optional<ValidationQueueItem> findPendingItemById(UUID id) {
+        return jdbcClient
+                .sql(
+                        """
+                        SELECT p.id, p.reference, p.title, p.property_type, p.created_at,
+                               ST_X(g.geom) AS longitude, ST_Y(g.geom) AS latitude
+                        FROM property p
+                        JOIN property_geometry g ON g.property_id = p.id
+                        WHERE p.id = :id
+                          AND p.deleted_at IS NULL
+                          AND p.validation_status = 'pending_validation'
+                        """)
+                .param("id", id)
+                .query(QUEUE_MAPPER)
+                .optional();
+    }
+
     public void markValidated(UUID id) {
         jdbcClient
                 .sql(

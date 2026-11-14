@@ -29,3 +29,5 @@ app:
   field:
     mutations-enabled: false
     organisation-id: ${APP_FIELD_ORGANISATION_ID:}
+  admin:
+    mutations-enabled: false
